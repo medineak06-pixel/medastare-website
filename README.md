@@ -1,20 +1,27 @@
-# MedaStaré Inc. website
+# MedaStaré Luxury Motion Upgrade
 
-A static, production-ready corporate website designed for deployment on Vercel.
+This package preserves the current MedaStaré site structure and upgrades it with:
 
-## Deploy
-1. Create a new GitHub repository.
-2. Upload all files in this folder.
-3. Import the repository into Vercel.
-4. Add `medastare.com` in Vercel → Project Settings → Domains.
-5. Update DNS at your domain provider using the exact records Vercel displays.
-6. Keep existing MX records for `@medastare.com` email accounts.
+- Apple-system typography (`-apple-system`, SF Pro fallbacks)
+- Midnight blue, black, beige and gold luxury palette
+- Glassmorphism navigation and holographic UI layers
+- Animated metallic headline gradient
+- 3D device movement, holographic orbit and AI orb animation
+- Cursor-responsive light, card spotlight and tilt effects
+- Magnetic buttons and refined scroll reveals
+- Reduced-motion accessibility support
+- Responsive mobile behavior
 
-## Before Apple Developer resubmission
-- Confirm https://medastare.com opens in a private browser window.
-- Confirm there is no password wall, Site Not Found page or redirect loop.
-- Test the Contact, Privacy Policy and Terms pages.
-- Ensure the organization name entered at Apple matches the D‑U‑N‑S record exactly.
+## Upload to GitHub
 
-## EraFusion™ wording
-The site currently says “proprietary.” Only change it to “patented” or “patent-pending” if that legal status is accurate and documented.
+Replace these existing files:
+
+- `index.html`
+- `styles.css`
+- `script.js`
+
+Add this new file:
+
+- `medastare-logo.png`
+
+Vercel should redeploy automatically after the GitHub commit.
