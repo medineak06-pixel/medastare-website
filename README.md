@@ -1,27 +1,18 @@
-# MedaStaré Luxury Motion Upgrade
+# MedaStaré Liquid Star V2
 
-This package preserves the current MedaStaré site structure and upgrades it with:
+Upload the contents of this folder to the existing `medastare-website` GitHub repository using **Add file → Upload files**, then commit the changes.
 
-- Apple-system typography (`-apple-system`, SF Pro fallbacks)
-- Midnight blue, black, beige and gold luxury palette
-- Glassmorphism navigation and holographic UI layers
-- Animated metallic headline gradient
-- 3D device movement, holographic orbit and AI orb animation
-- Cursor-responsive light, card spotlight and tilt effects
-- Magnetic buttons and refined scroll reveals
-- Reduced-motion accessibility support
-- Responsive mobile behavior
-
-## Upload to GitHub
-
-Replace these existing files:
-
+Updated files:
 - `index.html`
 - `styles.css`
 - `script.js`
-
-Add this new file:
-
 - `medastare-logo.png`
+- `medastare-logo-white.png`
 
-Vercel should redeploy automatically after the GitHub commit.
+This package keeps the existing full website and adds:
+- 3D animated MedAI™ star
+- MedaBody AI™, MedAI™, and MedaVision™ hero devices
+- ™ marks across MedaStaré product names
+- Apple-style liquid glass buttons
+- white browser-tab logo and `MedaStaré` page title
+- tuned layouts for desktop, tablet, and mobile

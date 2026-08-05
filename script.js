@@ -134,3 +134,26 @@ if (finePointer && !reduceMotion) {
     });
   }
 }
+
+// Liquid-glass pointer highlights
+const liquidSurfaces = document.querySelectorAll('.button, .nav-cta, .site-header');
+liquidSurfaces.forEach((surface) => {
+  surface.addEventListener('pointermove', (event) => {
+    const rect = surface.getBoundingClientRect();
+    surface.style.setProperty('--liquid-x', `${event.clientX - rect.left}px`);
+    surface.style.setProperty('--liquid-y', `${event.clientY - rect.top}px`);
+  });
+});
+
+// Give the MedAI star a tiny responsive tilt without compromising mobile performance
+const star = document.querySelector('.star-prism');
+const starSystem = document.querySelector('.ai-star-system');
+if (star && starSystem && finePointer && !reduceMotion) {
+  starSystem.addEventListener('pointermove', (event) => {
+    const rect = starSystem.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - .5;
+    const y = (event.clientY - rect.top) / rect.height - .5;
+    star.style.setProperty('--star-x', `${-y * 10}deg`);
+    star.style.setProperty('--star-y', `${x * 14}deg`);
+  });
+}
