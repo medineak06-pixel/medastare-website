@@ -62,98 +62,6 @@ th,td{text-align:left;vertical-align:top;padding:15px;border-right:1px solid var
 @media(max-width:620px){.hero{padding-top:78px}.header-inner{height:64px}h1{font-size:52px}.layout{padding-top:45px}.footer-links{grid-template-columns:1fr 1fr}table{display:block;overflow-x:auto;white-space:normal}}
 
 
-.cookie-banner{
-  position:fixed;
-  left:20px;
-  right:20px;
-  bottom:20px;
-  z-index:80;
-  transition:opacity .24s ease,transform .24s ease;
-}
-.cookie-banner.is-hidden{
-  opacity:0;
-  transform:translateY(10px);
-  pointer-events:none;
-}
-.cookie-banner__inner{
-  max-width:var(--max);
-  margin:0 auto;
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:20px;
-  padding:18px 20px;
-  border-radius:26px;
-  border:1px solid rgba(199,170,128,.22);
-  background:rgba(8,10,14,.95);
-  color:#f1ece4;
-  box-shadow:0 28px 80px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.07);
-  backdrop-filter:blur(22px) saturate(130%);
-}
-.cookie-banner__brand{
-  display:flex;
-  align-items:flex-start;
-  gap:14px;
-  min-width:0;
-}
-.cookie-banner__copy strong{
-  display:block;
-  font-size:15px;
-  margin-bottom:6px;
-  letter-spacing:-.02em;
-}
-.cookie-banner__copy p{
-  margin:0;
-  color:#c9c3bb;
-  font-size:13px;
-  line-height:1.55;
-  max-width:760px;
-}
-.cookie-banner__copy a{
-  display:inline-block;
-  margin-top:8px;
-  color:var(--gold2);
-  font-size:13px;
-}
-.cookie-banner__actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-.cookie-btn{
-  appearance:none;
-  border:none;
-  border-radius:999px;
-  padding:12px 16px;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  transition:transform .18s ease,opacity .18s ease,background .18s ease,color .18s ease,border-color .18s ease;
-}
-.cookie-btn:hover{transform:translateY(-1px)}
-.cookie-btn--primary{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;
-}
-.cookie-btn--secondary{
-  background:transparent;
-  color:#f1ece4;
-  border:1px solid rgba(255,255,255,.18);
-}
-@media(max-width:900px){
-  .cookie-banner__inner{flex-direction:column;align-items:flex-start}
-  .cookie-banner__actions{justify-content:flex-start}
-}
-@media(max-width:620px){
-  .cookie-banner{left:12px;right:12px;bottom:12px}
-  .cookie-banner__inner{padding:16px}
-  .cookie-banner__brand{align-items:flex-start}
-  .cookie-banner__copy p{font-size:12.5px}
-  .cookie-btn{width:100%}
-  .cookie-banner__actions{width:100%}
-}
-
 
 /* MEDASTARE EXACT INDEX LOGO OVERRIDE */
 .logo{
@@ -165,10 +73,6 @@ th,td{text-align:left;vertical-align:top;padding:15px;border-right:1px solid var
   background-size:27px 27px,cover;
 }
 .logo:after{content:none}
-.cookie-banner .logo{
-  background-image:url('/medastare-logo-white.png'),linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.02));
-  background-size:27px 27px,cover;
-}
 .wordmark>span:last-child{
   color:#fff;
 }
