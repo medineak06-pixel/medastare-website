@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedaStaré</title>
+  <meta name="description" content="MedaStaré — luxury fashion intelligence, reimagined." />
+  <meta name="theme-color" content="#050505" />
+  <meta property="og:title" content="MedaStaré" />
+  <meta property="og:description" content="Luxury AI ecosystem for style, beauty and next-generation personal intelligence." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="16" fill="black"/>
+    <path d="M18 48V16h7l7 14 7-14h7v32h-7V28l-7 14-7-14v20z" fill="white"/>
+    <path d="M36 16c6 2 10 5 13 9 3-4 6-6 10-7-3 4-6 9-7 13 4 2 7 5 10 9-5-2-9-4-13-7-2 4-5 8-10 11 2-5 4-9 7-13-4-2-7-5-10-9z" fill="white" transform="translate(8,-3) scale(.38)"/>
+  </svg>' />
+  <style>
+    :root{
+      --bg:#050505;
+      --bg-soft:#0a0b0f;
+      --panel:rgba(255,255,255,.07);
+      --panel-strong:rgba(255,255,255,.12);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f1eb;
+      --muted:rgba(245,241,235,.66);
+      --muted-2:rgba(245,241,235,.46);
+      --beige:#e9ddd0;
+      --champagne:#d8c1a3;
+      --gold:#b28c61;
+      --navy:#0d1530;
+      --navy-glow:#334ca9;
+      --glass:blur(22px) saturate(150%);
+      --radius:28px;
+      --shadow:0 30px 80px rgba(0,0,0,.45);
+      --max:1400px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(26,40,95,.22), transparent 28%),
+        radial-gradient(circle at 78% 16%, rgba(196,154,108,.12), transparent 25%),
+        radial-gradient(circle at 50% 45%, rgba(23,27,49,.28), transparent 38%),
+        linear-gradient(180deg,#040404 0%, #06070a 35%, #050505 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      inset:auto;
+      pointer-events:none;
+      z-index:-1;
+      filter:blur(60px);
+      opacity:.8;
+    }
+    body::before{
+      width:40vw;height:40vw;left:-10vw;top:10vh;
+      background:radial-gradient(circle, rgba(31,71,180,.16), transparent 65%);
+      animation:floatGlow 18s ease-in-out infinite;
+    }
+    body::after{
+      width:35vw;height:35vw;right:-10vw;top:0;
+      background:radial-gradient(circle, rgba(197,152,105,.14), transparent 62%);
+      animation:floatGlow 22s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatGlow{
+      0%,100%{transform:translate3d(0,0,0) scale(1)}
+      50%{transform:translate3d(0,30px,0) scale(1.08)}
+    }
+
+    .grain{
+      position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:2;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .wrap{width:min(calc(100% - 40px), var(--max));margin:0 auto}
+
+    .liquid{
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 8px 32px rgba(0,0,0,.25);
+      backdrop-filter:var(--glass); -webkit-backdrop-filter:var(--glass);
+    }
+
+    .nav-shell{
+      position:sticky;top:18px;z-index:20;padding-top:18px;
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+      padding:14px 18px;border-radius:999px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;font-size:1.25rem;font-weight:650;letter-spacing:-.04em;
+    }
+    .brand-mark{
+      width:42px;height:42px;border-radius:50%;position:relative;display:grid;place-items:center;overflow:hidden;
+      background:radial-gradient(circle at 50% 38%, rgba(255,255,255,.18), rgba(255,255,255,.03) 55%), linear-gradient(135deg, rgba(216,193,163,.18), rgba(42,56,116,.22));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.18), 0 14px 40px rgba(0,0,0,.35);
+      flex:none;
+    }
+    .brand-mark svg{width:24px;height:24px;fill:#fff;opacity:.96}
+
+    .nav-links{display:flex;align-items:center;gap:30px;color:var(--muted);font-size:.98rem}
+    .nav-links a{transition:color .25s ease, transform .25s ease}
+    .nav-links a:hover{color:#fff;transform:translateY(-1px)}
+
+    .cta-nav,.btn{
+      border:none;outline:none;cursor:pointer;color:#fff;font-family:inherit;
+      border-radius:999px;padding:13px 20px;font-size:.96rem;
+      transition:transform .28s ease, box-shadow .28s ease, background .28s ease, border-color .28s ease;
+    }
+    .cta-nav{min-width:120px}
+    .cta-nav:hover,.btn:hover{transform:translateY(-2px) scale(1.01)}
+
+    .hero{
+      padding:72px 0 32px;position:relative;overflow:hidden;
+    }
+    .hero-topline{
+      display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+      color:var(--muted-2);font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:28px;
+    }
+
+    .hero-grid{
+      display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;
+    }
+
+    .kicker{
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;margin-bottom:22px;
+      color:#f0e6da;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,#fff,#d8c1a3);box-shadow:0 0 18px rgba(255,255,255,.5)}
+
+    .hero h1{
+      font-size:clamp(3.4rem, 8vw, 7.3rem);
+      line-height:.94;letter-spacing:-.065em;margin:0 0 20px;max-width:10ch;
+    }
+    .hero-copy{
+      max-width:620px;font-size:1.15rem;line-height:1.7;color:var(--muted);margin:0 0 28px;
+    }
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+
+    .btn-primary{
+      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.1));
+      color:#fff;
+    }
+    .btn-secondary{
+      background:linear-gradient(180deg, rgba(16,20,38,.55), rgba(255,255,255,.03));
+      color:#efe7df;
+    }
+
+    .micro-proof{display:flex;gap:26px;flex-wrap:wrap;color:var(--muted-2);font-size:.9rem}
+    .micro-proof strong{display:block;color:#fff;font-size:1.1rem;letter-spacing:-.04em;margin-bottom:4px}
+
+    .device-stage{
+      position:relative;min-height:760px;display:grid;place-items:center;
+      perspective:1800px;
+    }
+    .device-glow{
+      position:absolute;inset:14% 12% auto;aspect-ratio:1/1;border-radius:50%;
+      background:
+        radial-gradient(circle, rgba(114,139,255,.34) 0%, rgba(66,92,216,.25) 24%, rgba(10,15,38,0) 68%),
+        radial-gradient(circle at 55% 45%, rgba(255,227,189,.18), transparent 36%);
+      filter:blur(30px);animation:pulse 7s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1);opacity:.9}
+      50%{transform:scale(1.08);opacity:1}
+    }
+
+    .phone{
+      position:absolute;width:280px;height:575px;border-radius:46px;padding:18px;overflow:hidden;
+      background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 30px 90px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.1);
+      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      transform-style:preserve-3d;
+      transition:transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s ease;
+    }
+    .phone::before{
+      content:"";position:absolute;left:50%;transform:translateX(-50%);top:16px;
+      width:105px;height:28px;border-radius:20px;background:#060606;z-index:4;
+      box-shadow:0 1px 0 rgba(255,255,255,.06), inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+    .phone-inner{
+      position:relative;height:100%;border-radius:32px;overflow:hidden;padding:34px 24px 24px;
+      background:
+        radial-gradient(circle at 65% 15%, rgba(255,255,255,.12), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .phone-label{
+      font-size:.84rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-bottom:18px;
+    }
+    .phone h3{
+      margin:0;font-size:3rem;line-height:.92;letter-spacing:-.07em;
+    }
+    .phone p{
+      margin:16px 0 0;color:rgba(255,255,255,.68);line-height:1.5;font-size:.98rem;
+    }
+    .phone small{font-size:.8rem;letter-spacing:.22em;color:rgba(255,255,255,.45);text-transform:uppercase}
+
+    .phone-left{
+      left:0;transform:translate3d(10px,62px,-80px) rotateY(17deg) rotateZ(-9deg);
+      background:linear-gradient(145deg, rgba(233,221,208,.88), rgba(189,170,150,.6));
+      color:#0a0a0a;
+    }
+    .phone-left .phone-inner{background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.24));border-color:rgba(255,255,255,.36)}
+    .phone-left .phone-label,.phone-left p,.phone-left small{color:rgba(0,0,0,.48)}
+
+    .phone-center{
+      z-index:3;width:320px;height:640px;transform:translate3d(0,-4px,0);
+      background:linear-gradient(180deg, rgba(11,16,39,.96), rgba(5,8,20,.94));
+    }
+
+    .phone-right{
+      right:0;transform:translate3d(-10px,64px,-90px) rotateY(-17deg) rotateZ(9deg);
+      background:linear-gradient(145deg, rgba(232,213,194,.84), rgba(183,148,122,.5));
+      color:#fff;
+    }
+
+    .star-stage{
+      position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);width:205px;height:205px;pointer-events:none;
+      display:grid;place-items:center;
+    }
+    .ring, .ring2{
+      position:absolute;border-radius:50%;border:1px solid rgba(215,205,197,.2);
+    }
+    .ring{width:180px;height:180px;transform:rotate(18deg);animation:spin 12s linear infinite}
+    .ring2{width:220px;height:120px;transform:rotate(-18deg);animation:spinReverse 14s linear infinite}
+    @keyframes spin{to{transform:rotate(378deg)}}
+    @keyframes spinReverse{to{transform:rotate(-378deg)}}
+
+    .star-core{
+      width:150px;height:150px;position:relative;transform-style:preserve-3d;animation:starFloat 8s ease-in-out infinite;
+      filter:drop-shadow(0 24px 44px rgba(68,95,214,.35)) drop-shadow(0 10px 24px rgba(224,193,158,.18));
+    }
+    @keyframes starFloat{
+      0%,100%{transform:rotateX(12deg) rotateY(-14deg) translateY(0)}
+      50%{transform:rotateX(-8deg) rotateY(14deg) translateY(-14px)}
+    }
+
+    .star-core::before,
+    .star-core::after{
+      content:"";position:absolute;inset:0;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 92%,50% 70%,21% 92%,32% 57%,2% 35%,39% 35%);
+      border-radius:18px;
+    }
+    .star-core::before{
+      background:radial-gradient(circle at 40% 28%, #fff6d6 0%, #d4c7ff 15%, #7086ff 36%, #121633 74%, #08080d 100%);
+      transform:translateZ(0px);
+      box-shadow:inset 0 8px 14px rgba(255,255,255,.35), inset 0 -12px 28px rgba(0,0,0,.45), 0 0 50px rgba(113,130,255,.35);
+    }
+    .star-core::after{
+      inset:10px;opacity:.42;
+      background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.9), rgba(255,255,255,.05) 58%, transparent 70%);
+      mix-blend-mode:screen;
+    }
+
+    .ticker{
+      margin:36px 0 26px;padding:16px;border-radius:999px;overflow:hidden;
+    }
+    .ticker-track{
+      display:flex;gap:34px;min-width:max-content;animation:ticker 24s linear infinite;color:var(--muted);text-transform:uppercase;font-size:.85rem;letter-spacing:.18em;
+    }
+    @keyframes ticker{to{transform:translateX(-50%)}}
+
+    .section{padding:42px 0 28px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap;margin-bottom:26px}
+    .eyebrow{color:var(--muted-2);text-transform:uppercase;letter-spacing:.2em;font-size:.78rem;margin-bottom:8px}
+    .section h2{
+      margin:0;font-size:clamp(2.1rem, 4vw, 4rem);line-height:.96;letter-spacing:-.06em;
+    }
+    .section-intro{max-width:620px;color:var(--muted);line-height:1.7;font-size:1.05rem}
+
+    .ecosystem{
+      display:grid;grid-template-columns:repeat(12,1fr);gap:18px;
+    }
+    .card{
+      position:relative;padding:28px;border-radius:32px;overflow:hidden;min-height:240px;
+    }
+    .card::before{
+      content:"";position:absolute;inset:auto -20% -35% auto;width:180px;height:180px;border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.12), transparent 65%);filter:blur(14px);
+    }
+    .card h3{font-size:2rem;letter-spacing:-.05em;margin:0 0 8px}
+    .tm{font-size:.72em;vertical-align:top;opacity:.72}
+    .card p{margin:0;color:var(--muted);max-width:30ch;line-height:1.6}
+    .card .mini-link{margin-top:24px;display:inline-flex;align-items:center;gap:8px;color:#fff;font-size:.95rem}
+    .span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}.span-7{grid-column:span 7}.span-8{grid-column:span 8}
+
+    .card-dark{background:linear-gradient(180deg, rgba(10,12,17,.82), rgba(255,255,255,.03))}
+    .card-beige{background:linear-gradient(180deg, rgba(233,221,208,.9), rgba(223,200,177,.68)); color:#0e0e0f}
+    .card-beige p,.card-beige .eyebrow{color:rgba(18,18,18,.65)}
+    .card-beige .mini-link{color:#101113}
+    .card-navy{background:linear-gradient(180deg, rgba(14,20,48,.92), rgba(24,31,76,.58))}
+    .card-gold{background:linear-gradient(180deg, rgba(177,139,99,.24), rgba(255,255,255,.03))}
+
+    .feature-grid{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:stretch;
+    }
+    .story-panel,.manifesto{
+      border-radius:34px;padding:34px;position:relative;overflow:hidden;
+    }
+    .story-panel{min-height:560px}
+    .story-list{display:grid;gap:14px;margin-top:28px}
+    .story-item{padding:18px 20px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .story-item strong{display:block;font-size:1.12rem;margin-bottom:7px;letter-spacing:-.03em}
+    .story-item span{color:var(--muted);line-height:1.55}
+
+    .liquid-pill{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--muted);font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;
+    }
+
+    .orbital{
+      position:absolute;right:-30px;bottom:-40px;width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle at 36% 28%, rgba(255,244,218,.8), rgba(129,145,255,.56) 28%, rgba(16,18,39,.9) 63%, rgba(0,0,0,.92) 100%);
+      box-shadow:0 0 80px rgba(77,102,255,.35), inset 0 12px 32px rgba(255,255,255,.2);
+    }
+    .orbital::before,.orbital::after{
+      content:"";position:absolute;inset:50%;translate:-50% -50%;border-radius:50%;border:1px solid rgba(255,255,255,.18)
+    }
+    .orbital::before{width:110%;height:62%;transform:rotate(22deg)}
+    .orbital::after{width:84%;height:122%;transform:rotate(-16deg)}
+
+    .manifesto blockquote{
+      margin:18px 0 24px;font-size:clamp(2rem, 4vw, 3.7rem);line-height:1.02;letter-spacing:-.06em;max-width:13ch;
+    }
+    .manifesto p{max-width:44ch;line-height:1.75;color:var(--muted)}
+
+    .footer{
+      padding:34px 0 60px;color:var(--muted-2)
+    }
+    .footer-shell{
+      display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 22px;border-radius:24px;
+    }
+    .footer-brand{display:flex;align-items:center;gap:12px;color:#fff}
+    .footer-links{display:flex;gap:18px;flex-wrap:wrap}
+
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1)}
+    .reveal.is-visible{opacity:1;transform:none}
+
+    @media (max-width: 1200px){
+      .hero-grid,.feature-grid{grid-template-columns:1fr}
+      .device-stage{min-height:700px;margin-top:24px}
+      .hero h1{max-width:11ch}
+    }
+
+    @media (max-width: 980px){
+      .nav-links{display:none}
+      .phone{width:230px;height:490px}
+      .phone-center{width:270px;height:550px}
+      .device-stage{transform:scale(.96);transform-origin:center top}
+      .span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12}
+    }
+
+    @media (max-width: 760px){
+      .wrap{width:min(calc(100% - 24px), var(--max))}
+      .nav-shell{top:10px;padding-top:10px}
+      .nav{padding:12px 12px}
+      .brand{font-size:1.08rem}
+      .brand-mark{width:38px;height:38px}
+      .cta-nav{padding:12px 16px;min-width:auto}
+      .hero{padding-top:34px}
+      .hero h1{font-size:clamp(2.65rem, 15vw, 4.5rem);max-width:12ch}
+      .hero-copy{font-size:1rem}
+      .hero-actions{gap:10px}
+      .micro-proof{gap:18px}
+      .hero-topline{font-size:.7rem;letter-spacing:.16em}
+
+      .device-stage{min-height:770px;transform:none}
+      .phone{position:absolute;width:min(72vw, 265px);height:min(132vw, 520px)}
+      .phone-left{left:4%;top:120px;transform:translate3d(0,40px,-80px) rotateY(14deg) rotateZ(-8deg)}
+      .phone-center{width:min(76vw, 286px);height:min(140vw, 565px);top:70px}
+      .phone-right{right:4%;top:120px;transform:translate3d(0,38px,-80px) rotateY(-14deg) rotateZ(8deg)}
+      .phone h3{font-size:2.2rem}
+      .star-stage{width:150px;height:150px;top:53%}
+      .star-core{width:112px;height:112px}
+      .ring{width:140px;height:140px}.ring2{width:165px;height:90px}
+
+      .section{padding:28px 0 20px}
+      .story-panel,.manifesto,.card{padding:24px;border-radius:26px}
+      .manifesto blockquote{font-size:2.25rem}
+      .footer-shell{padding:18px;border-radius:22px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+      .reveal{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+
+  <div class="wrap nav-shell">
+    <nav class="nav liquid">
+      <a href="#top" class="brand" aria-label="MedaStaré home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 52V12h7l12 23 12-23h7v40h-7V26L32 49 20 26v26z"/>
+            <path d="M51 10l1.7 5.3H58l-4.3 3.1 1.6 5.3L51 20.5l-4.3 3.2 1.6-5.3-4.3-3.1h5.3z"/>
+          </svg>
+        </span>
+        <span>MedaStaré</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#intelligence">Intelligence</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+      </div>
+
+      <a class="cta-nav liquid" href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-topline reveal">
+        <span>Adaptive intelligence</span>
+        <span>Luxury technology for personal evolution</span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy-col reveal">
+          <div class="kicker liquid"><span class="dot"></span> Apple precision. Dior energy. MedaStaré world.</div>
+          <h1>Luxury intelligence. Reimagined.</h1>
+          <p class="hero-copy">
+            MedaStaré is a couture digital ecosystem where style, beauty, identity and next-generation AI converge.
+            Designed with cinematic calm, liquid-glass elegance and a premium future-facing interface.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary liquid" href="#ecosystem">Enter the ecosystem</a>
+            <a class="btn btn-secondary liquid" href="#experience">Experience MedAI<span class="tm">™</span></a>
+          </div>
+
+          <div class="micro-proof">
+            <div>
+              <strong>AI-led</strong>
+              <span>Style, body & beauty intelligence</span>
+            </div>
+            <div>
+              <strong>Luxury-first</strong>
+              <span>Editorial, mobile-ready experience</span>
+            </div>
+            <div>
+              <strong>Global</strong>
+              <span>Built for the modern MedaStaré era</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-stage reveal" aria-hidden="true">
+          <div class="device-glow"></div>
+
+          <article class="phone phone-left">
+            <div class="phone-inner">
+              <div class="phone-label">MedaBody AI<span class="tm">™</span></div>
+              <h3>Your body,<br/>beautifully<br/>understood.</h3>
+              <p>Silhouette intelligence, aesthetic guidance and self-image elevation, shaped with softness and precision.</p>
+              <div style="position:absolute;left:24px;bottom:28px"><small>Refine</small></div>
+            </div>
+          </article>
+
+          <article class="phone phone-center">
+            <div class="phone-inner">
+              <div class="phone-label">MedAI<span class="tm">™</span></div>
+              <h3>Analyze.<br/>Create.<br/>Evolve.</h3>
+              <p>The central intelligence layer of MedaStaré — personal, luxurious and designed to understand your visual identity.</p>
+              <div style="position:absolute;left:24px;bottom:28px"><small>Discover</small></div>
+            </div>
+          </article>
+
+          <article class="phone phone-right">
+            <div class="phone-inner">
+              <div class="phone-label">MedaVision<span class="tm">™</span></div>
+              <h3>See your next<br/>era before it<br/>arrives.</h3>
+              <p>Visual generation, editorial previews and high-end concepting for a more elevated personal future.</p>
+              <div style="position:absolute;left:24px;bottom:28px"><small>Imagine</small></div>
+            </div>
+          </article>
+
+          <div class="star-stage">
+            <div class="ring"></div>
+            <div class="ring2"></div>
+            <div class="star-core"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticker liquid reveal" aria-label="MedaStaré ecosystem modules">
+        <div class="ticker-track">
+          <span>MedAI<span class="tm">™</span></span>
+          <span>MedaVision<span class="tm">™</span></span>
+          <span>MedaBody AI<span class="tm">™</span></span>
+          <span>Closeté<span class="tm">™</span></span>
+          <span>FashionStare<span class="tm">™</span></span>
+          <span>MedaFusion<span class="tm">™</span></span>
+          <span>StyleTrack<span class="tm">™</span></span>
+          <span>MedAI<span class="tm">™</span></span>
+          <span>MedaVision<span class="tm">™</span></span>
+          <span>MedaBody AI<span class="tm">™</span></span>
+          <span>Closeté<span class="tm">™</span></span>
+          <span>FashionStare<span class="tm">™</span></span>
+          <span>MedaFusion<span class="tm">™</span></span>
+          <span>StyleTrack<span class="tm">™</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="ecosystem">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">The MedaStaré ecosystem</div>
+          <h2>Every signature layer,<br/>built to feel iconic.</h2>
+        </div>
+        <p class="section-intro">Not a collection of tools — a composed luxury universe. Each product is designed to feel editorial, emotionally intelligent and unmistakably premium.</p>
+      </div>
+
+      <div class="ecosystem">
+        <article class="card liquid card-dark span-4 reveal">
+          <div class="eyebrow">Core intelligence</div>
+          <h3>MedAI<span class="tm">™</span></h3>
+          <p>Your private fashion-and-beauty intelligence layer, made to understand taste, visual harmony and personal transformation.</p>
+          <a class="mini-link" href="#intelligence">Explore MedAI →</a>
+        </article>
+
+        <article class="card liquid card-beige span-4 reveal">
+          <div class="eyebrow">Wardrobe curation</div>
+          <h3>Closeté<span class="tm">™</span></h3>
+          <p>Digitize, refine and curate your wardrobe with a couture-level lens. Elevated closet organization meets editorial styling logic.</p>
+          <a class="mini-link" href="#experience">Open Closeté →</a>
+        </article>
+
+        <article class="card liquid card-navy span-4 reveal">
+          <div class="eyebrow">Signature styling</div>
+          <h3>FashionStare<span class="tm">™</span></h3>
+          <p>Daily outfit intelligence shaped by mood, occasion, image goals and future-forward style storytelling.</p>
+          <a class="mini-link" href="#experience">See looks →</a>
+        </article>
+
+        <article class="card liquid card-gold span-5 reveal">
+          <div class="eyebrow">Visual generation</div>
+          <h3>MedaVision<span class="tm">™</span></h3>
+          <p>High-end visual interpretation for identity, inspiration, transformation previews and editorial concept design.</p>
+          <a class="mini-link" href="#experience">View visions →</a>
+        </article>
+
+        <article class="card liquid card-dark span-7 reveal">
+          <div class="eyebrow">Embodied beauty</div>
+          <h3>MedaBody AI<span class="tm">™</span></h3>
+          <p>Body-aware confidence technology — silhouette support, image refinement, aesthetic direction and premium self-evolution guidance.</p>
+          <a class="mini-link" href="#intelligence">Enter the body layer →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="intelligence">
+      <div class="feature-grid">
+        <article class="story-panel liquid reveal">
+          <span class="liquid-pill">Adaptive intelligence</span>
+          <div style="margin-top:18px" class="eyebrow">The quiet luxury of intelligence</div>
+          <h2 style="margin:0 0 10px">More than AI.<br/>A felt experience.</h2>
+          <p class="section-intro" style="margin:0 0 0;max-width:44ch">MedaStaré should feel effortless and expensive. This design language uses liquid-glass depth, couture calm, and smooth motion that reveals information with intention.</p>
+
+          <div class="story-list">
+            <div class="story-item reveal">
+              <strong>Liquid interactions</strong>
+              <span>Soft glass buttons, glowing edges and water-drop highlights echo the newest premium interface trends.</span>
+            </div>
+            <div class="story-item reveal">
+              <strong>Apple-clean structure</strong>
+              <span>Breathing room, bold typography and cinematic scroll rhythm keep the interface elegant and disciplined.</span>
+            </div>
+            <div class="story-item reveal">
+              <strong>Dior-coded luxury</strong>
+              <span>Black lacquer, ivory softness, champagne warmth and a measured gold accent build a couture atmosphere.</span>
+            </div>
+          </div>
+
+          <div class="orbital"></div>
+        </article>
+
+        <article class="manifesto liquid reveal" id="about">
+          <div class="eyebrow">Manifesto</div>
+          <blockquote>
+            A luxury technology house for the next era of personal intelligence.
+          </blockquote>
+          <p>
+            MedaStaré is designed to sit beyond the generic AI aesthetic. It should feel like a premium fashion-tech maison — emotionally intelligent, globally positioned and visually unforgettable.
+          </p>
+          <p>
+            Every screen is intended to communicate confidence, sophistication and the sense that intelligence itself can feel beautiful.
+          </p>
+          <a class="btn btn-primary liquid" href="#contact" style="display:inline-flex;margin-top:10px">Build the launch narrative</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="experience">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">Experience</div>
+          <h2>Designed for desktop.<br/>Composed for mobile.</h2>
+        </div>
+        <p class="section-intro">The layout, scale and interaction system are fully responsive. On mobile, the visual hierarchy stacks intentionally and the hero remains dramatic without breaking the experience.</p>
+      </div>
+
+      <div class="ecosystem">
+        <article class="card liquid card-dark span-6 reveal">
+          <div class="eyebrow">Mobile first detail</div>
+          <h3>Responsive luxury<span class="tm">™</span></h3>
+          <p>The navbar collapses elegantly, typography scales smoothly, and the hero device composition is re-balanced for smaller screens.</p>
+        </article>
+
+        <article class="card liquid card-navy span-6 reveal">
+          <div class="eyebrow">Brand control</div>
+          <h3>Iconic consistency<span class="tm">™</span></h3>
+          <p>The tab title is MedaStaré, the favicon is white, and every ecosystem module keeps its trademark symbol visible across the site.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap" id="contact">
+    <div class="footer-shell liquid reveal">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 52V12h7l12 23 12-23h7v40h-7V26L32 49 20 26v26z"/>
+            <path d="M51 10l1.7 5.3H58l-4.3 3.1 1.6 5.3L51 20.5l-4.3 3.2 1.6-5.3-4.3-3.1h5.3z"/>
+          </svg>
+        </span>
+        <div>
+          <div style="font-weight:650;color:#fff">MedaStaré</div>
+          <div style="font-size:.9rem;color:var(--muted)">Luxury intelligence, reimagined.</div>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#intelligence">Intelligence</a>
+        <a href="#experience">Experience</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const stage = document.querySelector('.device-stage');
+    const phones = document.querySelectorAll('.phone');
+
+    if (stage && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      stage.addEventListener('mousemove', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+
+        phones.forEach((phone, i) => {
+          const strength = i === 1 ? 12 : 8;
+          let base = '';
+          if (phone.classList.contains('phone-left')) base = `translate3d(10px,62px,-80px) rotateY(${17 + px * strength}deg) rotateZ(${-9 + py * 4}deg)`;
+          if (phone.classList.contains('phone-center')) base = `translate3d(${px * 10}px,${py * -8}px,0) rotateY(${px * 8}deg) rotateX(${py * -8}deg)`;
+          if (phone.classList.contains('phone-right')) base = `translate3d(-10px,64px,-90px) rotateY(${-17 + px * strength}deg) rotateZ(${9 + py * 4}deg)`;
+          if (window.innerWidth < 760) return;
+          phone.style.transform = base;
+        });
+      });
+
+      stage.addEventListener('mouseleave', () => {
+        if (window.innerWidth < 760) return;
+        document.querySelector('.phone-left').style.transform = 'translate3d(10px,62px,-80px) rotateY(17deg) rotateZ(-9deg)';
+        document.querySelector('.phone-center').style.transform = 'translate3d(0,-4px,0)';
+        document.querySelector('.phone-right').style.transform = 'translate3d(-10px,64px,-90px) rotateY(-17deg) rotateZ(9deg)';
+      });
+    }
+  </script>
+</body>
+</html>
