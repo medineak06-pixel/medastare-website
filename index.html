@@ -959,6 +959,225 @@ h1 span{
   .hero{--hero-progress:0!important}
   .luxury-particles{display:none}
 }
+
+
+/* =========================================================
+   FINAL USER-REQUESTED UPDATE — no layout, color or copy changes.
+   Restores card motion, uses the supplied five-point MedAI star,
+   enriches the top contact control, and adds restrained glass motion.
+   ========================================================= */
+
+/* Enriched top-right liquid glass contact hub */
+.nav-hub{
+  --hub-x:28%;
+  --hub-y:24%;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  min-height:48px;
+  padding:4px 5px;
+  isolation:isolate;
+  background:
+    radial-gradient(100px 44px at var(--button-x) var(--button-y),rgba(255,255,255,.25),transparent 68%),
+    linear-gradient(180deg,rgba(255,255,255,.105),rgba(255,255,255,.035));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),inset 0 -12px 26px rgba(5,8,17,.17),0 14px 38px rgba(0,0,0,.28);
+}
+.nav-hub > *{position:relative;z-index:3}
+.nav-hub-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:38px;
+  padding:0 10px;
+  border-radius:999px;
+  color:rgba(255,255,255,.8);
+  white-space:nowrap;
+  transition:color .28s ease,background .28s ease,box-shadow .28s ease,transform .28s var(--ease);
+}
+.nav-hub-link:hover{color:white;transform:translateY(-1px)}
+.nav-hub-support{
+  padding-left:6px;
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.035));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.nav-hub-orb{
+  width:25px;height:25px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 34% 26%,#fff 0 7%,#e9dfd1 16%,#929dc8 35%,#24315e 61%,#090a0e 100%);
+  box-shadow:inset 0 2px 5px rgba(255,255,255,.34),0 0 16px rgba(125,143,207,.22);
+  animation:navOrbFloat 4.8s ease-in-out infinite;
+}
+.nav-hub-divider{width:1px;height:22px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.18),transparent)}
+.nav-hub-partners{padding-right:9px;color:rgba(255,255,255,.65)}
+.nav-hub-arrow{font-size:.95rem;color:rgba(216,187,131,.7);transition:transform .28s ease,color .28s ease}
+.nav-hub-partners:hover .nav-hub-arrow{transform:translate(2px,-2px);color:var(--gold-bright)}
+@keyframes navOrbFloat{0%,100%{transform:translateY(0) rotate(0);filter:brightness(.95)}50%{transform:translateY(-2px) rotate(13deg) scale(1.05);filter:brightness(1.08)}}
+
+/* Exact five-point star from the supplied code, locked to the MedAI screen */
+.screen-medai .star-wrap.reference-star{
+  position:absolute;
+  left:50%;
+  top:58%;
+  width:61%;
+  max-width:205px;
+  height:auto;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  display:grid;
+  place-items:center;
+  perspective:800px;
+  pointer-events:none;
+}
+.reference-star .ref-star-halo{
+  position:absolute;width:82%;height:82%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,244,199,.88) 0%,rgba(122,140,255,.53) 25%,rgba(29,38,97,.18) 53%,transparent 72%);
+  filter:blur(16px);
+  animation:refStarHalo 4.8s ease-in-out infinite;
+}
+.reference-star .ref-star-orbit{
+  position:absolute;width:94%;height:37%;border:1px solid rgba(223,209,183,.31);border-radius:50%;
+  transform:rotateX(68deg) rotateZ(12deg);
+  animation:refStarOrbit 10s linear infinite;
+}
+.reference-star .ref-star-orbit.two{
+  width:106%;height:51%;border-color:rgba(112,140,255,.25);
+  transform:rotateX(68deg) rotateZ(-22deg);
+  animation-duration:14s;animation-direction:reverse;
+}
+.reference-star .ref-star3d{
+  width:65%;height:auto;aspect-ratio:1;position:relative;transform-style:preserve-3d;
+  animation:refStarFloat 7.2s ease-in-out infinite;
+  filter:drop-shadow(0 18px 32px rgba(81,104,255,.34)) drop-shadow(0 0 18px rgba(225,203,171,.14));
+}
+.reference-star .ref-star3d svg{position:absolute;inset:0;width:100%;height:100%}
+.reference-star .ref-star3d .back{transform:translate(7px,8px) translateZ(-7px) scale(.97);opacity:.36;filter:blur(.6px)}
+.reference-star .ref-star3d .front{transform:translateZ(8px)}
+.reference-star::after{
+  content:"";position:absolute;width:8px;height:8px;border-radius:50%;left:35%;top:27%;
+  background:#fff9e8;box-shadow:0 0 16px 5px rgba(255,242,207,.48);
+  animation:refStarGlint 4.5s ease-in-out infinite;
+}
+@keyframes refStarHalo{50%{transform:scale(1.11);opacity:.8}}
+@keyframes refStarOrbit{to{rotate:360deg}}
+@keyframes refStarFloat{0%,100%{transform:translateY(0) rotateY(-8deg) rotateZ(-2deg)}50%{transform:translateY(-11px) rotateY(9deg) rotateZ(3deg)}}
+@keyframes refStarGlint{0%,64%,100%{opacity:.16;transform:scale(.45)}74%{opacity:1;transform:scale(1.15)}}
+
+/* Restored animated objects inside the approved product cards */
+.product-card{isolation:isolate}
+.product-card > .panel-motion,
+.product-card > .card-constellation{
+  position:absolute!important;
+  z-index:1!important;
+  transform:none!important;
+  pointer-events:none;
+}
+.panel-motion{
+  right:20px;
+  bottom:18px;
+  width:158px;
+  height:158px;
+  opacity:.75;
+}
+.motion-medai .pm-ring{
+  position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(93,108,152,.27);
+  transform:translate(-50%,-50%) rotateX(66deg);
+}
+.motion-medai .ring-a{width:132px;height:56px;animation:cardOrbit 8s linear infinite}
+.motion-medai .ring-b{width:102px;height:102px;border-color:rgba(184,151,106,.24);animation:cardOrbitReverse 11s linear infinite}
+.motion-medai .pm-core{
+  position:absolute;left:50%;top:50%;width:45px;height:45px;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 34% 27%,#fff8e7,#c4cae2 24%,#6878ad 50%,#18213d 76%,#08090d);
+  box-shadow:0 0 34px rgba(91,111,183,.28);animation:cardCoreBreathe 4.4s ease-in-out infinite;
+}
+.motion-medai .pm-glint{position:absolute;left:53%;top:39%;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.65);animation:cardGlint 3.8s ease-in-out infinite}
+@keyframes cardOrbit{to{rotate:360deg}}
+@keyframes cardOrbitReverse{to{rotate:-360deg}}
+@keyframes cardCoreBreathe{50%{transform:translate(-50%,-56%) scale(1.08)}}
+@keyframes cardGlint{0%,100%{opacity:.2}50%{opacity:1;transform:translate(7px,-5px)}}
+
+.motion-closet{display:flex;align-items:flex-end;justify-content:center;gap:9px;padding-bottom:20px}
+.motion-closet .closet-line{
+  width:13px;border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(123,96,73,.2));
+  box-shadow:inset 0 1px 0 white,0 9px 21px rgba(75,56,42,.1);
+  animation:closetRise 5.8s ease-in-out infinite;
+}
+.motion-closet .l1{height:72px;animation-delay:-.8s}.motion-closet .l2{height:112px;animation-delay:-2.4s}.motion-closet .l3{height:88px;animation-delay:-4s}
+.motion-closet .closet-pearl{position:absolute;right:25px;top:23px;width:25px;height:25px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff,#e4d7c8 38%,#9f8974 100%);box-shadow:0 10px 24px rgba(74,57,41,.15);animation:closetPearl 6s ease-in-out infinite}
+@keyframes closetRise{50%{transform:translateY(-15px) scaleY(1.08);opacity:.7}}
+@keyframes closetPearl{50%{transform:translate(-22px,18px) scale(.88)}}
+
+.motion-vision .vision-lens,.motion-vision .vision-ring{position:absolute;left:50%;top:50%;border-radius:50%;transform:translate(-50%,-50%)}
+.motion-vision .vision-lens{width:74px;height:74px;background:radial-gradient(circle at 36% 28%,rgba(255,255,255,.78),rgba(223,203,183,.2) 34%,rgba(42,31,28,.13) 62%,transparent 70%);border:1px solid rgba(120,103,88,.19);box-shadow:inset 0 0 22px rgba(255,255,255,.2),0 0 34px rgba(160,135,108,.1);animation:lensFloat 5.2s ease-in-out infinite}
+.motion-vision .vision-ring{width:119px;height:79px;border:1px solid rgba(110,96,83,.22);animation:visionRingSpin 9s linear infinite}
+.motion-vision .vision-beam{position:absolute;left:23px;top:72px;width:112px;height:1px;background:linear-gradient(90deg,transparent,rgba(92,83,75,.46),transparent);transform:rotate(-22deg);animation:beamSweep 4.8s ease-in-out infinite}
+.motion-vision .vision-dot{position:absolute;right:20px;top:34px;width:7px;height:7px;border-radius:50%;background:#fff3df;box-shadow:0 0 16px rgba(138,112,86,.35);animation:cardVisionDot 4.2s ease-in-out infinite}
+@keyframes lensFloat{50%{transform:translate(-50%,-60%) scale(1.06)}}
+@keyframes visionRingSpin{to{rotate:360deg}}
+@keyframes beamSweep{0%,100%{translate:-20px 13px;opacity:.2}50%{translate:24px -12px;opacity:.9}}
+@keyframes cardVisionDot{50%{transform:translate(-24px,15px) scale(1.3)}}
+
+.card-constellation{
+  right:22px;
+  top:18px;
+  width:128px;
+  height:94px;
+  opacity:.55;
+  --const-line:rgba(88,99,130,.25);
+  --const-dot:#9ca7c7;
+  --const-pearl:#f8efe3;
+}
+.dark-card .card-constellation{--const-line:rgba(216,199,178,.34);--const-dot:#b9c5ef;--const-pearl:#fff4df;opacity:.72}
+.constellation-path{position:absolute;left:9px;right:7px;top:47px;height:1px;background:linear-gradient(90deg,transparent,var(--const-line),rgba(183,151,109,.24),transparent);animation:constellationBreath 4.8s ease-in-out infinite}
+.constellation-ring{position:absolute;width:62px;height:34px;right:18px;top:24px;border:1px solid var(--const-line);border-radius:50%;transform:rotate(-13deg);animation:constellationSpin 10s linear infinite}
+.constellation-dot{position:absolute;border-radius:50%;background:var(--const-pearl);box-shadow:0 0 14px rgba(119,132,174,.28);animation:constellationFloat 5.4s ease-in-out infinite}
+.constellation-dot.dot-a{width:7px;height:7px;left:13px;top:54px}
+.constellation-dot.dot-b{width:10px;height:10px;left:57px;top:17px;animation-delay:-1.8s;background:var(--const-dot)}
+.constellation-dot.dot-c{width:5px;height:5px;right:10px;bottom:13px;animation-delay:-3.4s}
+.constellation-5,.constellation-8{transform:rotate(9deg)!important}
+.constellation-6,.constellation-9{transform:rotate(-13deg) scale(.94)!important}
+.constellation-7,.constellation-10{transform:rotate(4deg) scale(.9)!important}
+.constellation-5 .constellation-ring,.constellation-9 .constellation-ring{animation-direction:reverse;animation-duration:13s}
+@keyframes constellationBreath{50%{transform:scaleX(.82);opacity:.42}}
+@keyframes constellationSpin{to{rotate:360deg}}
+@keyframes constellationFloat{0%,100%{transform:translate(0,0);opacity:.42}50%{transform:translate(9px,-12px) scale(1.22);opacity:1}}
+
+/* One extra Apple-style refractive pass, kept inside the existing cards only */
+.product-card .card-number::after{
+  content:"";
+  display:inline-block;
+  width:34px;height:1px;margin-left:10px;vertical-align:middle;
+  background:linear-gradient(90deg,currentColor,transparent);
+  opacity:.28;
+  transform-origin:left;
+  animation:cardSignal 4.6s ease-in-out infinite;
+}
+@keyframes cardSignal{0%,100%{transform:scaleX(.35);opacity:.16}50%{transform:scaleX(1);opacity:.45}}
+
+@media(max-width:900px){
+  .nav-hub{min-height:46px}
+  .screen-medai .star-wrap.reference-star{width:59%;top:58%}
+}
+@media(max-width:600px){
+  .nav-hub{padding:3px 4px;gap:2px;min-height:44px}
+  .nav-hub-link{min-height:36px;padding-inline:7px;font-size:12px}
+  .nav-hub-orb{width:23px;height:23px}
+  .nav-hub-divider{height:19px}
+  .nav-hub-partners{padding-right:6px}
+  .nav-hub-arrow{display:none}
+  .screen-medai .star-wrap.reference-star{width:60%;top:58%}
+  .panel-motion{width:128px;height:128px;right:10px;bottom:12px;opacity:.66}
+  .card-constellation{width:100px;height:74px;right:10px;top:12px;opacity:.46}
+}
+@media(max-width:390px){
+  .nav-hub-partners span:first-child{font-size:0}
+  .nav-hub-partners span:first-child::after{content:"Partner";font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-hub-orb,.ref-star-halo,.ref-star-orbit,.ref-star3d,.reference-star::after,
+  .panel-motion *, .card-constellation *, .product-card .card-number::after{animation:none!important}
+}
+
 </style></head>
 <body>
 <div aria-hidden="true" class="scroll-progress"></div>
@@ -981,7 +1200,11 @@ h1 span{
 <a href="#global">Global Launch</a>
 <a href="#about">About</a>
 </nav>
-<a aria-label="Contact MedaStaré support" class="nav-cta magnetic" data-magnetic="" href="mailto:support@medastare.com">Support</a>
+<div aria-label="MedaStaré support and partnerships" class="nav-cta nav-hub magnetic" data-magnetic="">
+<a class="nav-hub-link nav-hub-support" href="mailto:support@medastare.com"><span class="nav-hub-orb" aria-hidden="true"></span><span>Support</span></a>
+<span class="nav-hub-divider" aria-hidden="true"></span>
+<a class="nav-hub-link nav-hub-partners" href="mailto:partners@medastare.com"><span>Partners</span><span class="nav-hub-arrow" aria-hidden="true">↗</span></a>
+</div>
 </header>
 <main>
 <section class="hero section-dark">
@@ -1030,12 +1253,14 @@ h1 span{
 <div class="screen screen-medai">
 <span class="screen-kicker">MedAI™</span>
 <strong>Analyze.<br/>Create. Evolve.</strong>
-<div aria-hidden="true" class="star-system">
-<span class="star-aura"></span>
-<span class="star-orbit star-orbit-a"></span>
-<span class="star-orbit star-orbit-b"></span>
-<span class="star-shape"></span>
-<span class="star-flare"></span>
+<div aria-hidden="true" class="star-wrap reference-star">
+<div class="ref-star-halo"></div>
+<div class="ref-star-orbit"></div>
+<div class="ref-star-orbit two"></div>
+<div class="ref-star3d">
+<svg aria-hidden="true" class="back" viewbox="0 0 100 100"><defs><lineargradient id="gb" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#101936"></stop><stop offset="1" stop-color="#030306"></stop></lineargradient></defs><path d="M50 2 61.2 35.2 96 35.2 67.8 55.4 78.6 89 50 68.8 21.4 89 32.2 55.4 4 35.2 38.8 35.2Z" fill="url(#gb)"></path></svg>
+<svg aria-hidden="true" class="front" viewbox="0 0 100 100"><defs><radialgradient cx="34%" cy="25%" id="rg"><stop offset="0" stop-color="#fffbea"></stop><stop offset=".17" stop-color="#dcd8ff"></stop><stop offset=".42" stop-color="#7f90ff"></stop><stop offset=".72" stop-color="#222957"></stop><stop offset="1" stop-color="#07080d"></stop></radialgradient><lineargradient id="shine" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff" stop-opacity=".65"></stop><stop offset=".45" stop-color="#fff" stop-opacity="0"></stop></lineargradient></defs><path d="M50 2 61.2 35.2 96 35.2 67.8 55.4 78.6 89 50 68.8 21.4 89 32.2 55.4 4 35.2 38.8 35.2Z" fill="url(#rg)"></path><path d="M50 6 59 36 91 36 65 54 74 84 50 66 26 84 35 54 9 36 41 36Z" fill="url(#shine)" opacity=".58"></path></svg>
+</div>
 </div>
 <div class="vision-readout"><span></span> MedAI intelligence online</div>
 </div>
@@ -1069,7 +1294,7 @@ h1 span{
           intelligence, creativity and personal identity.
         </p>
 </div>
-<div class="product-grid"><article class="product-card featured" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">01</div><div><h3>MedAI™</h3><p>A personal intelligence layer connecting guidance, recommendations and conversation across the MedaStaré ecosystem.</p></div><span class="card-link">Your intelligent companion</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">02</div><div><h3>Closeté™</h3><p>A smart wardrobe environment for organizing pieces, discovering combinations and unlocking more from what you already own.</p></div><span class="card-link">Your wardrobe, reconnected</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">03</div><div><h3>MedaVision™</h3><p>Visual analysis and creation for outfits, garments, transformation previews and premium editorial concepts.</p></div><span class="card-link">Visual intelligence</span></article><article class="product-card featured dark-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div aria-hidden="true" class="card-aurora"></div><div class="card-number">04</div><div><h3>EraFusion™</h3><p>A proprietary MedaStaré concept that translates iconic fashion eras into modern personal style.</p></div><span class="card-link">Past codes. Future expression.</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">05</div><div><h3>FashionStare™</h3><p>AI styling shaped by personal taste, body, mood, occasion, wardrobe and identity.</p></div><span class="card-link">Personal style intelligence</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">06</div><div><h3>MedaBody AI™</h3><p>Body-aware styling intelligence for more relevant silhouettes, proportions, harmony and fit direction.</p></div><span class="card-link">Built for real individuality</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">07</div><div><h3>StyleTrack™</h3><p>A private style memory for looks, moods, notes and the evolution of your personal identity over time.</p></div><span class="card-link">Your style history, intelligently remembered</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">08</div><div><h3>MuseMatch™</h3><p>Iconic fashion energy translated into personalized style direction without copying identity.</p></div><span class="card-link">Inspiration, intelligently translated</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">09</div><div><h3>MedaStaré Edit™</h3><p>Curated fashion intelligence, trend interpretation and premium editorial storytelling.</p></div><span class="card-link">The editorial layer</span></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">10</div><div><h3>MedArena™</h3><p>Fashion challenges, recognition and social style experiences designed around participation and discovery.</p></div><span class="card-link">Fashion, made participatory</span></article></div>
+<div class="product-grid"><article class="product-card featured" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">01</div><div><h3>MedAI™</h3><p>A personal intelligence layer connecting guidance, recommendations and conversation across the MedaStaré ecosystem.</p></div><span class="card-link">Your intelligent companion</span><div class="panel-motion motion-medai" aria-hidden="true"><span class="pm-ring ring-a"></span><span class="pm-ring ring-b"></span><span class="pm-core"></span><span class="pm-glint"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">02</div><div><h3>Closeté™</h3><p>A smart wardrobe environment for organizing pieces, discovering combinations and unlocking more from what you already own.</p></div><span class="card-link">Your wardrobe, reconnected</span><div class="panel-motion motion-closet" aria-hidden="true"><span class="closet-line l1"></span><span class="closet-line l2"></span><span class="closet-line l3"></span><span class="closet-pearl"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">03</div><div><h3>MedaVision™</h3><p>Visual analysis and creation for outfits, garments, transformation previews and premium editorial concepts.</p></div><span class="card-link">Visual intelligence</span><div class="panel-motion motion-vision" aria-hidden="true"><span class="vision-lens"></span><span class="vision-ring"></span><span class="vision-beam"></span><span class="vision-dot"></span></div></article><article class="product-card featured dark-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div aria-hidden="true" class="card-aurora"></div><div class="card-number">04</div><div><h3>EraFusion™</h3><p>A proprietary MedaStaré concept that translates iconic fashion eras into modern personal style.</p></div><span class="card-link">Past codes. Future expression.</span><div class="card-constellation constellation-4" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">05</div><div><h3>FashionStare™</h3><p>AI styling shaped by personal taste, body, mood, occasion, wardrobe and identity.</p></div><span class="card-link">Personal style intelligence</span><div class="card-constellation constellation-5" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">06</div><div><h3>MedaBody AI™</h3><p>Body-aware styling intelligence for more relevant silhouettes, proportions, harmony and fit direction.</p></div><span class="card-link">Built for real individuality</span><div class="card-constellation constellation-6" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">07</div><div><h3>StyleTrack™</h3><p>A private style memory for looks, moods, notes and the evolution of your personal identity over time.</p></div><span class="card-link">Your style history, intelligently remembered</span><div class="card-constellation constellation-7" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">08</div><div><h3>MuseMatch™</h3><p>Iconic fashion energy translated into personalized style direction without copying identity.</p></div><span class="card-link">Inspiration, intelligently translated</span><div class="card-constellation constellation-8" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">09</div><div><h3>MedaStaré Edit™</h3><p>Curated fashion intelligence, trend interpretation and premium editorial storytelling.</p></div><span class="card-link">The editorial layer</span><div class="card-constellation constellation-9" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article><article class="product-card" data-cinematic="" data-reveal="" data-spotlight="" data-tilt=""><div class="card-number">10</div><div><h3>MedArena™</h3><p>Fashion challenges, recognition and social style experiences designed around participation and discovery.</p></div><span class="card-link">Fashion, made participatory</span><div class="card-constellation constellation-10" aria-hidden="true"><span class="constellation-path"></span><span class="constellation-ring"></span><span class="constellation-dot dot-a"></span><span class="constellation-dot dot-b"></span><span class="constellation-dot dot-c"></span></div></article></div>
 </section>
 <section class="section section-dark technology" id="technology">
 <div aria-hidden="true" class="tech-ambient"></div>
