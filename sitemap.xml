@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://medastare.com/</loc></url>
-  <url><loc>https://medastare.com/privacy.html</loc></url>
-  <url><loc>https://medastare.com/terms.html</loc></url>
-  <url><loc>https://medastare.com/contact.html</loc></url>
+  <url><loc>https://medastare.com/privacy</loc></url>
+  <url><loc>https://medastare.com/terms</loc></url>
+  <url><loc>https://medastare.com/privacy-choices</loc></url>
+  <url><loc>https://medastare.com/account-deletion</loc></url>
+  <url><loc>https://medastare.com/ai-data-processing</loc></url>
+  <url><loc>https://medastare.com/subscription-terms</loc></url>
+  <url><loc>https://medastare.com/support</loc></url>
+  <url><loc>https://medastare.com/cookies</loc></url>
+  <url><loc>https://medastare.com/legal</loc></url>
+  <url><loc>https://medastare.com/security</loc></url>
+  <url><loc>https://medastare.com/subprocessors</loc></url>
+  <url><loc>https://medastare.com/accessibility</loc></url>
 </urlset>
