@@ -1,161 +1,212 @@
 (() => {
   "use strict";
 
-  const $ = (s, root=document) => root.querySelector(s);
-  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-  const clamp = (v, a=0, b=1) => Math.max(a, Math.min(b, v));
-  const lerp = (a,b,t) => a+(b-a)*t;
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+  const clamp = (v,a=0,b=1) => Math.max(a,Math.min(b,v));
+  const mix = (a,b,t) => a+(b-a)*t;
   const smooth = t => t*t*(3-2*t);
-
-  const progress = $("#scrollProgress");
-  const heroTrack = $("#heroTrack");
-  const heroCopy = $("#heroCopy");
-  const heroVisual = $("#heroVisual");
-  const heroImage = $("#heroImage");
-  const heroDevice = $("#heroDevice");
-  const heroOrbit = $("#heroOrbit");
-  const microCard = $("#microCard");
-  const closetTrack = $("#closetTrack");
-  const garments = $$(".garment");
-  const slots = $$(".combine-slot");
-
+  const outCubic = t => 1-Math.pow(1-t,3);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add("in");
-        observer.unobserve(entry.target);
+  const reveals = $$(".reveal");
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add("in");
+        revealObserver.unobserve(e.target);
       }
     });
-  }, {threshold:.13, rootMargin:"0px 0px -5% 0px"});
-  $$(".reveal").forEach(el => observer.observe(el));
+  }, {threshold:.13, rootMargin:"0px 0px -6% 0px"});
+  reveals.forEach(el => revealObserver.observe(el));
 
-  let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
-  if(heroVisual && !reduced){
-    heroVisual.addEventListener("pointermove", e => {
-      const r = heroVisual.getBoundingClientRect();
-      mouseX = ((e.clientX-r.left)/r.width-.5);
-      mouseY = ((e.clientY-r.top)/r.height-.5);
+  const heroTrack = $("#heroTrack");
+  const hero = $("#hero");
+  const heroCopy = $("#heroCopy");
+  const heroStage = $("#heroStage");
+  const heroWoman = $("#heroWoman");
+  const heroPhone = $("#heroPhone");
+  const heroGlass = $("#heroGlass");
+  const heroRing = $("#heroRing");
+  const heroStores = $("#heroStores");
+  const scrollHint = $("#scrollHint");
+
+  const medaiStage = $("#medaiStage");
+  const medaiRing = $("#medaiRing");
+  const intelTags = $$(".intel-tag");
+
+  const closetTrack = $("#closetTrack");
+  const garments = $$(".garment");
+  const combineStates = $$(".combine-state");
+  const combineRows = $$(".combine-row");
+
+  const technology = $("#technology");
+  const techBg = $("#techBg");
+  const techContent = $("#techContent");
+  const techGlass = $("#techGlass");
+  const final = $("#download");
+  const finalBg = $("#finalBg");
+
+  let targetX=0,targetY=0,currentX=0,currentY=0;
+  if(heroStage && !reduced){
+    heroStage.addEventListener("pointermove", e => {
+      const r=heroStage.getBoundingClientRect();
+      targetX=(e.clientX-r.left)/r.width-.5;
+      targetY=(e.clientY-r.top)/r.height-.5;
     }, {passive:true});
-    heroVisual.addEventListener("pointerleave", () => {mouseX=0;mouseY=0}, {passive:true});
+    heroStage.addEventListener("pointerleave",()=>{targetX=0;targetY=0},{passive:true});
   }
 
-  function heroProgress(){
-    if(!heroTrack) return 0;
-    const r=heroTrack.getBoundingClientRect();
+  function sectionProgress(el){
+    if(!el) return 0;
+    const r=el.getBoundingClientRect();
     const total=Math.max(1,r.height-innerHeight);
     return clamp(-r.top/total);
   }
 
-  function closetProgress(){
-    if(!closetTrack) return 0;
-    const r=closetTrack.getBoundingClientRect();
-    const total=Math.max(1,r.height-innerHeight);
-    return clamp(-r.top/total);
+  function viewportProgress(el, start=.84, end=.16){
+    if(!el) return 0;
+    const r=el.getBoundingClientRect();
+    const y=(r.top/innerHeight);
+    return clamp((start-y)/(start-end));
   }
 
-  function update(){
-    const doc = document.documentElement;
-    const max = Math.max(1, doc.scrollHeight-innerHeight);
-    if(progress) progress.style.transform=`scaleX(${scrollY/max})`;
+  function updateHero(){
+    if(!heroTrack) return;
+    const p=sectionProgress(heroTrack);
+    const s=smooth(p);
+    const exit=clamp((p-.54)/.46);
+    const e=outCubic(exit);
 
-    if(!reduced){
-      currentX=lerp(currentX,mouseX,.055);
-      currentY=lerp(currentY,mouseY,.055);
+    if(hero) hero.style.setProperty("--heroP",p.toFixed(4));
 
-      const hp=heroProgress();
-      const hs=smooth(hp);
-      if(heroCopy){
-        heroCopy.style.transform=`translate3d(0,${-28*hs}px,0)`;
-        heroCopy.style.opacity=String(1-hs*.22);
-      }
-      if(heroVisual){
-        heroVisual.style.transform=`translate3d(${currentX*6}px,${currentY*5}px,0) rotateX(${currentY*-1.7}deg) rotateY(${currentX*2.1}deg)`;
-      }
-      if(heroImage){
-        heroImage.style.transform=`translate3d(${currentX*-7}px,${hs*18+currentY*-4}px,${-20+hs*35}px) scale(${.99+hs*.035})`;
-        heroImage.style.filter=`saturate(.72) contrast(1.08) brightness(${.82-hs*.05})`;
-      }
-      if(heroDevice){
-        heroDevice.style.transform=`rotateY(${-13+currentX*4}deg) rotateX(${4-currentY*3}deg) rotateZ(${2.5-hs*1.5}deg) translate3d(${hs*-24}px,${hs*-22}px,${125+hs*75}px) scale(${1+hs*.035})`;
-      }
-      if(heroOrbit){
-        heroOrbit.style.transform=`rotateX(67deg) rotateZ(${-20+hs*18}deg) translateZ(${80+hs*40}px)`;
-      }
-      if(microCard){
-        microCard.style.transform=`translate3d(${hs*-18}px,${hs*14}px,${175+hs*30}px) rotateY(${-7+currentX*3}deg)`;
-        microCard.style.opacity=String(1-hs*.40);
-      }
+    currentX=mix(currentX,targetX,.055);
+    currentY=mix(currentY,targetY,.055);
 
-      const cp=closetProgress();
-      garments.forEach((g,i)=>{
-        const start=.07+i*.045;
-        const duration=.62;
-        const raw=clamp((cp-start)/duration);
-        const t=smooth(raw);
-        const lift=Math.sin(t*Math.PI);
-        const lane=(i-3)*18;
-        const settleX=(i-3)*15;
-        const x=lane*lift + settleX*t;
-        const y=-74*lift + (92+(i%3)*8)*t;
-        const z=80 + 310*lift + 95*t;
-        const rz=(i-3)*1.7*lift + (i%2?2.2:-2.2)*t;
-        const ry=(i%2?5:-5)*lift;
-        const scale=1+.20*lift-.08*t;
-        g.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${scale})`;
-        g.style.opacity=raw>.94?String(clamp(1-(raw-.94)*5,.66,1)):"1";
-        g.style.filter=`blur(${Math.max(0,(raw-.97)*9)}px)`;
-      });
-      slots.forEach((slot,i)=>slot.classList.toggle("active",cp>(.30+i*.105)));
+    if(heroCopy){
+      heroCopy.style.transform=`translate3d(0,${-34*s}px,0) scale(${1-.015*e})`;
+      heroCopy.style.opacity=String(1-.78*e);
+      heroCopy.style.filter=`blur(${4.5*e}px)`;
     }
-
-    requestAnimationFrame(update);
+    if(heroStage){
+      heroStage.style.transform=`translate3d(${currentX*7}px,${currentY*5}px,0) rotateX(${currentY*-1.5}deg) rotateY(${currentX*1.8}deg)`;
+    }
+    if(heroWoman){
+      heroWoman.style.transform=`translate3d(${currentX*-5 + 9*s}px,${currentY*-3 + 19*s}px,${35+65*s}px) scale(${.97+.035*s})`;
+      heroWoman.style.opacity=String(1-.40*e);
+      heroWoman.style.filter=`drop-shadow(0 35px 80px rgba(0,0,0,.48)) blur(${2.8*e}px)`;
+    }
+    if(heroPhone){
+      heroPhone.style.transform=`rotateY(${15+currentX*3.5}deg) rotateX(${3-currentY*2.8}deg) rotateZ(${-2.5+1.7*s}deg) translate3d(${25*s}px,${-34*s}px,${145+145*s}px) scale(${1+.10*s})`;
+      heroPhone.style.opacity=String(1-.63*e);
+    }
+    if(heroGlass){
+      heroGlass.style.transform=`translate3d(${18*s}px,${16*s}px,${175+60*s}px) rotateY(${8+currentX*3}deg)`;
+      heroGlass.style.opacity=String(1-.92*e);
+    }
+    if(heroRing){
+      heroRing.style.transform=`rotateX(71deg) rotateZ(${-12+22*s}deg) translateZ(${40+75*s}px) scale(${1+.07*s})`;
+      heroRing.style.opacity=String(.9-.68*e);
+    }
+    if(heroStores){
+      heroStores.style.transform=`translate3d(0,${-12*s}px,0) scale(${1+.055*s})`;
+      heroStores.style.transformOrigin="left center";
+      heroStores.style.opacity=String(1-.96*clamp((p-.38)/.36));
+      heroStores.style.filter=`blur(${5*clamp((p-.53)/.30)}px)`;
+    }
+    if(scrollHint) scrollHint.style.opacity=String(1-clamp(p/.32));
   }
 
-  const network=$("#network");
-  if(network){
-    const points=[
-      [14,24],[33,17],[52,29],[75,17],[84,48],[68,71],[45,76],[22,62],[49,51]
-    ];
-    const pairs=[[0,1],[1,2],[2,3],[2,8],[8,4],[8,5],[8,6],[8,7],[7,0],[6,7],[5,6]];
-    points.forEach((p,i)=>{
-      const n=document.createElement("i");
-      n.className="node"+(i===8||i===3?" gold":"");
-      n.style.left=p[0]+"%";
-      n.style.top=p[1]+"%";
-      network.appendChild(n);
-    });
-    pairs.forEach(([a,b],idx)=>{
-      const A=points[a], B=points[b];
-      const dx=B[0]-A[0], dy=B[1]-A[1];
-      const len=Math.hypot(dx,dy);
-      const ang=Math.atan2(dy,dx)*180/Math.PI;
-      const line=document.createElement("i");
-      line.className="net-line";
-      line.style.left=A[0]+"%";
-      line.style.top=A[1]+"%";
-      line.style.width=len+"%";
-      line.style.transform=`rotate(${ang}deg)`;
-      network.appendChild(line);
-
-      if(idx<7 && !reduced){
-        const pulse=document.createElement("i");
-        pulse.className="data-pulse";
-        network.appendChild(pulse);
-        const duration=4500+idx*460;
-        const offset=idx*620;
-        const animate=now=>{
-          const t=((now+offset)%duration)/duration;
-          pulse.style.left=(A[0]+dx*t)+"%";
-          pulse.style.top=(A[1]+dy*t)+"%";
-          pulse.style.opacity=String(Math.sin(t*Math.PI));
-          requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-      }
+  function updateMedAI(){
+    if(!medaiStage) return;
+    const p=viewportProgress(medaiStage,1.0,-.10);
+    const s=smooth(p);
+    if(medaiRing){
+      medaiRing.style.transform=`translate(-50%,-50%) rotateX(67deg) rotateZ(${18*s}deg) scale(${.94+.08*s})`;
+    }
+    intelTags.forEach((tag,i)=>{
+      const drift=Number(tag.dataset.drift || 0);
+      const appear=clamp((p-(.09+i*.045))/.28);
+      const leave=clamp((p-.76)/.22);
+      const x=drift*(18-10*s);
+      const y=(1-appear)*24 - leave*18;
+      tag.style.opacity=String(appear*(1-.65*leave));
+      const center = tag.classList.contains("it5") ? "translateX(-50%) " : "";
+      tag.style.transform=`${center}translate3d(${x}px,${y}px,${35+24*s}px)`;
+      tag.style.filter=`blur(${(1-appear)*5 + leave*2.5}px)`;
     });
   }
 
-  requestAnimationFrame(update);
+  function garmentMotion(t,i){
+    // Premium "jump" with a soft overshoot: lift from rail, float forward, then settle.
+    const lift=Math.sin(Math.min(1,t)*Math.PI);
+    const overshoot=Math.sin(Math.min(1,t)*Math.PI*2)*Math.pow(1-t,1.6);
+    const lane=(i-3)*18;
+    const x=lane*lift + (i-3)*13*t + overshoot*8*(i%2?1:-1);
+    const y=-105*lift + 94*t - overshoot*12;
+    const z=55 + 390*lift + 120*t;
+    const rz=(i-3)*1.55*lift + (i%2?2.2:-2.2)*t + overshoot*2.4;
+    const ry=(i%2?5.5:-5.5)*lift;
+    const scale=1+.27*lift-.07*t;
+    return {x,y,z,rz,ry,scale};
+  }
+
+  function updateCloset(){
+    if(!closetTrack) return;
+    const p=sectionProgress(closetTrack);
+    garments.forEach((g,i)=>{
+      const start=.055+i*.045;
+      const duration=.68;
+      const raw=clamp((p-start)/duration);
+      const t=smooth(raw);
+      const m=garmentMotion(t,i);
+      g.style.transform=`translate3d(${m.x}px,${m.y}px,${m.z}px) rotateY(${m.ry}deg) rotateZ(${m.rz}deg) scale(${m.scale})`;
+      const fade=clamp((raw-.93)/.07);
+      g.style.opacity=String(1-.31*fade);
+      g.style.filter=`blur(${2.2*fade}px)`;
+    });
+
+    const state = p < .24 ? 0 : p < .46 ? 1 : p < .70 ? 2 : 3;
+    combineStates.forEach((s,i)=>s.classList.toggle("active",i===state));
+    combineRows.forEach((r,i)=>r.classList.toggle("active",p>(.22+i*.145)));
+  }
+
+  function updateTechnology(){
+    if(!technology) return;
+    const p=sectionProgress(technology);
+    const s=smooth(p);
+    const exit=clamp((p-.70)/.30);
+    if(techBg){
+      techBg.style.transform=`scale(${1.05+.08*s}) translate3d(${18*s}px,${-10*s}px,0)`;
+      techBg.style.filter=`saturate(${.72+.10*s}) brightness(${.82-.08*exit})`;
+    }
+    if(techContent){
+      techContent.style.transform=`translate3d(0,${-30*s}px,0) scale(${1-.018*exit})`;
+      techContent.style.opacity=String(1-.54*exit);
+      techContent.style.filter=`blur(${3.8*exit}px)`;
+    }
+    if(techGlass){
+      techGlass.style.transform=`translateY(-50%) rotateZ(${8*s}deg) translate3d(${-28*s}px,${8*s}px,${80*s}px) scale(${.96+.10*s})`;
+      techGlass.style.opacity=String(.78-.28*exit);
+    }
+  }
+
+  function updateFinal(){
+    if(!final || !finalBg) return;
+    const p=viewportProgress(final,.96,.08);
+    finalBg.style.transform=`scale(${1.08-.045*smooth(p)}) translate3d(0,${12*(1-p)}px,0)`;
+  }
+
+  function loop(){
+    if(!reduced){
+      updateHero();
+      updateMedAI();
+      updateCloset();
+      updateTechnology();
+      updateFinal();
+    }
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
 })();
