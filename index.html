@@ -5,17 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <meta name="description" content="MedaStaré — Fashion intelligence, reimagined.">
-<title>MedaStaré — Fashion Intelligence</title>
+<meta property="og:title" content="MedaStaré">
+<meta property="og:description" content="Fashion intelligence, reimagined.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://medastare.com/">
+<link rel="canonical" href="https://medastare.com/">
 <link rel="icon" href="/favicon-256.png">
+<title>MedaStaré — Fashion Intelligence</title>
+
 <style>
 :root{
   --bg:#000;
+  --panel:#070707;
   --white:#fff;
-  --muted:rgba(255,255,255,.62);
-  --muted2:rgba(255,255,255,.38);
+  --muted:rgba(255,255,255,.68);
+  --muted-2:rgba(255,255,255,.42);
+  --muted-3:rgba(255,255,255,.20);
   --line:rgba(255,255,255,.10);
-  --gold:#c8a86a;
+  --line-soft:rgba(255,255,255,.055);
+  --gold:#c5a46a;
+  --navy:#16223b;
   --ease:cubic-bezier(.16,1,.3,1);
+  --ease2:cubic-bezier(.22,.74,.16,1);
 }
 *{box-sizing:border-box}
 html{background:#000;scroll-behavior:smooth}
@@ -25,181 +36,345 @@ body{
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility
 }
 a{color:inherit;text-decoration:none}
-img{display:block}
-.wrap{width:min(1280px,calc(100% - 64px));margin:auto}
+img{display:block;max-width:100%}
+button{font:inherit}
+::selection{background:rgba(197,164,106,.25);color:#fff}
+.site-shell{position:relative;z-index:1}
+.wrap{width:min(1320px,calc(100% - 64px));margin:auto}
+
+/* HEADER */
 .site-header{
-  position:fixed;z-index:100;left:0;right:0;top:0;height:64px;
-  background:rgba(0,0,0,.54);backdrop-filter:blur(24px) saturate(140%);
-  border-bottom:1px solid rgba(255,255,255,.055)
+  position:fixed;z-index:1000;inset:0 0 auto;height:64px;
+  background:rgba(0,0,0,.56);
+  backdrop-filter:blur(24px) saturate(135%);
+  border-bottom:1px solid var(--line-soft)
 }
 .header-inner{
-  width:min(1280px,calc(100% - 64px));height:64px;margin:auto;
+  width:min(1320px,calc(100% - 64px));height:64px;margin:auto;
   display:flex;align-items:center;justify-content:space-between
 }
-.brand img{height:26px;width:auto}
-.nav{display:flex;gap:28px;align-items:center;font-size:12px;color:rgba(255,255,255,.62)}
+.brand img{height:25px;width:auto}
+.nav{display:flex;align-items:center;gap:28px;color:rgba(255,255,255,.64);font-size:12px}
 .nav a{transition:color .25s ease}.nav a:hover{color:#fff}
 
-/* HERO */
-.hero-track{height:175svh;position:relative}
-.hero{
-  position:sticky;top:0;height:100svh;min-height:720px;overflow:hidden;
-  display:flex;align-items:center;padding-top:64px;background:#000
+/* TYPE */
+.eyebrow{
+  font-size:10px;letter-spacing:.19em;text-transform:uppercase;font-weight:600;
+  color:var(--muted-2)
 }
-.hero::before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    radial-gradient(circle at 76% 48%,rgba(34,47,82,.20),transparent 25%),
-    radial-gradient(circle at 68% 65%,rgba(200,168,106,.035),transparent 20%);
+.hero-title{
+  font-size:clamp(72px,9.4vw,154px);line-height:.84;letter-spacing:-.076em;
+  font-weight:600;margin:20px 0 27px
 }
-.hero-grid{
-  width:min(1280px,calc(100% - 64px));margin:auto;
-  display:grid;grid-template-columns:.92fr 1.08fr;gap:30px;align-items:center;
-  min-height:calc(100svh - 64px);position:relative;z-index:3
-}
-.hero-copy{max-width:660px;position:relative;z-index:10;will-change:transform,opacity,filter}
-.kicker{
-  font-size:10px;letter-spacing:.19em;text-transform:uppercase;
-  color:rgba(255,255,255,.42);font-weight:600
-}
-h1{
-  margin:22px 0 26px;font-size:clamp(72px,8.6vw,136px);line-height:.85;
-  letter-spacing:-.072em;font-weight:600;color:#fff
+.section-title{
+  font-size:clamp(58px,7vw,110px);line-height:.90;letter-spacing:-.064em;
+  font-weight:600;margin:18px 0 24px
 }
 .lead{
-  margin:0;color:var(--muted);font-size:17px;line-height:1.65;
-  max-width:590px;letter-spacing:-.012em
+  max-width:650px;color:var(--muted);font-size:17px;line-height:1.65;
+  letter-spacing:-.014em;margin:0
 }
-.store-row{display:flex;gap:12px;align-items:center;margin-top:31px;will-change:transform,opacity,filter}
-.store-badge{
-  width:154px;height:48px;display:block;overflow:hidden;border-radius:10px;
-  transition:transform .35s var(--ease),filter .35s ease
+.reveal{
+  opacity:0;transform:translateY(32px);filter:blur(8px);
+  transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease)
 }
-.store-badge:hover{transform:translateY(-2px);filter:brightness(1.08)}
-.store-badge img{width:100%;height:100%;object-fit:contain}
-.scroll-hint{
-  margin-top:28px;font-size:10px;letter-spacing:.12em;color:var(--muted2);
-  display:flex;align-items:center;gap:10px
+.reveal.in{opacity:1;transform:none;filter:none}
+
+/* STORE BADGES */
+.store-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:30px}
+.store-badge{height:46px;display:block}
+.store-badge img{height:46px;width:auto;display:block}
+.google-badge img{height:52px;margin-top:-3px}
+.store-note{margin-top:14px;color:var(--muted-2);font-size:10px;letter-spacing:.04em}
+
+/* HERO */
+.hero-track{height:190svh;position:relative}
+.hero{
+  position:sticky;top:0;height:100svh;min-height:720px;overflow:hidden;padding-top:64px;
+  background:#000
 }
-.scroll-hint i{
-  width:16px;height:27px;border:1px solid rgba(255,255,255,.18);border-radius:999px;position:relative
+.hero-bg{
+  position:absolute;z-index:0;inset:0;
+  background:
+    linear-gradient(90deg,#000 0%,rgba(0,0,0,.98) 27%,rgba(0,0,0,.76) 47%,rgba(0,0,0,.17) 75%,rgba(0,0,0,.10) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.12),transparent 53%,#000 100%),
+    url("/assets/hero-model.jpg") 74% center/cover no-repeat;
+  transform:scale(1.035);will-change:transform,filter,opacity
 }
-.scroll-hint i::after{
-  content:"";position:absolute;left:50%;top:5px;width:2px;height:5px;border-radius:999px;background:#fff;
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 52%,rgba(255,255,255,.035) 59%,transparent 66%);
+  transform:translateX(-35%);opacity:.52;animation:heroSheen 11s ease-in-out infinite
+}
+@keyframes heroSheen{50%{transform:translateX(28%)}}
+.hero-inner{
+  height:calc(100svh - 64px);display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+  align-items:center;position:relative;z-index:4
+}
+.hero-copy{padding-bottom:7vh;will-change:transform,opacity,filter}
+.hero-copy .lead{max-width:585px}
+.hero-scroll{
+  position:absolute;left:0;bottom:6vh;display:flex;align-items:center;gap:11px;
+  color:var(--muted-2);font-size:10px;letter-spacing:.12em
+}
+.hero-scroll i{
+  width:18px;height:30px;border:1px solid rgba(255,255,255,.18);border-radius:99px;position:relative
+}
+.hero-scroll i::after{
+  content:"";position:absolute;left:50%;top:6px;width:2px;height:5px;border-radius:99px;background:#fff;
   transform:translateX(-50%);animation:scrollDot 2s ease-in-out infinite
 }
-@keyframes scrollDot{50%{transform:translate(-50%,9px);opacity:.18}}
-
-.hero-stage{
-  position:relative;height:min(83svh,850px);min-height:600px;
-  perspective:1700px;transform-style:preserve-3d;will-change:transform
-}
-.hero-woman{
-  position:absolute;z-index:4;right:-1%;bottom:-3%;width:min(44vw,590px);max-height:94%;
-  object-fit:contain;object-position:bottom center;filter:drop-shadow(0 32px 72px rgba(0,0,0,.48));
-  transform:translate3d(0,0,0) scale(.98);transform-origin:bottom center;
-  will-change:transform,opacity,filter
-}
-.soft-panel{
-  position:absolute;z-index:2;right:8%;bottom:13%;width:69%;height:61%;
-  border-radius:40px;background:linear-gradient(145deg,rgba(255,255,255,.028),rgba(255,255,255,.008));
-  border:1px solid rgba(255,255,255,.055);backdrop-filter:blur(2px)
+@keyframes scrollDot{50%{transform:translate(-50%,10px);opacity:.18}}
+.hero-credit{
+  position:absolute;right:0;bottom:6vh;font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.28);
+  text-transform:uppercase
 }
 
-/* Premium phone: quiet, realistic, no floating cards */
-.phone{
-  position:absolute;z-index:8;left:3%;bottom:8%;width:242px;height:500px;padding:7px;border-radius:50px;
-  background:linear-gradient(145deg,#27282d,#050506 58%,#16130f);
-  border:1px solid rgba(255,255,255,.24);
-  box-shadow:0 50px 130px rgba(0,0,0,.68), inset 0 1px 0 rgba(255,255,255,.20);
-  transform:rotateY(14deg) rotateX(2deg) rotateZ(-2deg) translateZ(130px);
-  will-change:transform,opacity,filter
+/* MEDAI */
+.medai-track{height:210svh;position:relative;background:#000}
+.medai-sticky{
+  position:sticky;top:0;height:100svh;min-height:720px;overflow:hidden;display:flex;align-items:center
 }
-.phone::before{
-  content:"";position:absolute;z-index:4;top:13px;left:50%;transform:translateX(-50%);
-  width:82px;height:23px;border-radius:999px;background:#020202
+.medai-grid{
+  display:grid;grid-template-columns:.86fr 1.14fr;gap:72px;align-items:center;width:100%
 }
-.phone-screen{
-  position:relative;height:100%;border-radius:41px;overflow:hidden;padding:50px 17px 18px;
+.medai-copy{position:relative;z-index:10}
+.medai-visual{
+  position:relative;height:min(79svh,800px);min-height:610px;overflow:hidden;background:#060606;
+  border-left:1px solid var(--line-soft)
+}
+.medai-image{
+  position:absolute;inset:0;
   background:
-    radial-gradient(circle at 76% 12%,rgba(42,58,99,.34),transparent 27%),
-    linear-gradient(180deg,#101116,#080809 58%,#030303)
+    linear-gradient(90deg,rgba(0,0,0,.32),transparent 37%),
+    linear-gradient(180deg,rgba(0,0,0,.02),transparent 48%,rgba(0,0,0,.72)),
+    url("/assets/medai-woman.jpg") center 20%/cover no-repeat;
+  transform:scale(1.045);filter:saturate(.72) contrast(1.04);will-change:transform,filter
 }
-.phone-screen::after{
-  content:"";position:absolute;inset:-25%;
-  background:linear-gradient(125deg,transparent 38%,rgba(255,255,255,.045) 49%,transparent 57%);
-  transform:translateX(-30%);animation:screenSheen 8s ease-in-out infinite
+.medai-rule{
+  position:absolute;z-index:5;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
+  transform:scaleX(0);transform-origin:left center;will-change:transform,opacity
 }
-@keyframes screenSheen{50%{transform:translateX(28%)}}
-.ui-label{font-size:8px;letter-spacing:.16em;color:rgba(255,255,255,.36);position:relative;z-index:2}
-.ui-title{
-  position:relative;z-index:2;margin:16px 0 26px;font-size:29px;line-height:1.03;
-  letter-spacing:-.045em;font-weight:600
+.rule-1{top:27%}.rule-2{top:55%}.rule-3{top:73%}
+.medai-label{
+  position:absolute;z-index:7;padding:0;background:none;border:none;border-radius:0;
+  color:rgba(255,255,255,.52);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  opacity:0;will-change:transform,opacity,filter
 }
-.ui-block{
-  position:relative;z-index:2;padding:13px 0;border-top:1px solid rgba(255,255,255,.08);
-  display:flex;justify-content:space-between;gap:12px;font-size:10px;color:rgba(255,255,255,.40)
+.medai-label b{
+  display:block;color:#fff;font-size:13px;letter-spacing:-.015em;text-transform:none;margin-top:6px;font-weight:550
 }
-.ui-block b{color:#fff;font-weight:560}
+.ml1{left:7%;top:22%}.ml2{right:7%;top:49%;text-align:right}.ml3{left:10%;bottom:20%}
 
-/* NEXT SECTION PREVIEW — intentionally restrained */
-.next{
-  min-height:92svh;background:#000;display:flex;align-items:center;padding:120px 0 160px
+/* CLOSETÉ */
+.closete-track{height:330svh;position:relative;background:#000}
+.closete-sticky{
+  position:sticky;top:0;height:100svh;min-height:720px;overflow:hidden;background:#000
 }
-.next-inner{width:min(1280px,calc(100% - 64px));margin:auto;border-top:1px solid rgba(255,255,255,.065);padding-top:90px}
-.next small{font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.35);text-transform:uppercase}
-.next h2{
-  margin:18px 0 0;font-size:clamp(58px,6.8vw,102px);line-height:.91;letter-spacing:-.062em;
-  font-weight:600;max-width:900px
+.closete-scene{
+  position:absolute;inset:64px 0 0;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.20),transparent 27%,rgba(0,0,0,.15) 68%,rgba(0,0,0,.72)),
+    linear-gradient(90deg,rgba(0,0,0,.56),transparent 34%,transparent 72%,rgba(0,0,0,.20)),
+    url("/closete-premium.png") center/cover no-repeat;
+  will-change:transform,filter
 }
+.closete-top{
+  position:absolute;z-index:10;left:4.8vw;top:13vh;max-width:660px
+}
+.closete-top .section-title{font-size:clamp(56px,6.5vw,102px)}
+.closete-top .lead{max-width:570px}
+.garments{position:absolute;z-index:12;inset:64px 0 0;perspective:1700px;transform-style:preserve-3d;pointer-events:none}
+.garment{
+  position:absolute;top:31%;width:92px;height:270px;transform-origin:50% 8%;
+  transform-style:preserve-3d;will-change:transform,opacity,filter
+}
+.garment img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 28px 28px rgba(0,0,0,.68))}
+.g1{left:18%}.g2{left:29%}.g3{left:40%;width:80px}.g4{left:50%;width:105px}.g5{left:61%;width:80px}.g6{left:71%;width:106px}.g7{left:81%}
+.look-state{
+  position:absolute;z-index:15;right:5vw;bottom:8vh;width:min(390px,34vw);
+  padding-left:22px;border-left:1px solid rgba(255,255,255,.20)
+}
+.look-kicker{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:16px}
+.look-stage{position:relative;height:82px;overflow:hidden}
+.look-line{
+  position:absolute;inset:0;display:flex;align-items:flex-start;font-size:30px;line-height:1.04;letter-spacing:-.04em;
+  font-weight:580;opacity:0;transform:translateY(28px);filter:blur(6px);transition:.52s var(--ease)
+}
+.look-line.active{opacity:1;transform:none;filter:none}
+.look-meter{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.look-meter i{height:1px;background:rgba(255,255,255,.14);transition:background .45s ease,box-shadow .45s ease}
+.look-meter i.active{background:var(--gold);box-shadow:0 0 12px rgba(197,164,106,.34)}
 
+/* ECOSYSTEM — EDITORIAL, NO CARDS */
+.ecosystem{background:#000;padding:170px 0 80px}
+.ecosystem-head{display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:end;margin-bottom:90px}
+.ecosystem-head .lead{max-width:520px}
+.product-list{border-top:1px solid var(--line)}
+.product-row{
+  position:relative;min-height:170px;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:70px 1.1fr 1fr 36px;align-items:center;gap:28px;overflow:hidden;
+  transition:background .4s ease
+}
+.product-row::before{
+  content:"";position:absolute;inset:0;opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.026),transparent);
+  transform:translateX(-30%);transition:opacity .4s ease,transform .7s var(--ease)
+}
+.product-row:hover::before{opacity:1;transform:translateX(20%)}
+.product-no{font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.30)}
+.product-name{font-size:clamp(32px,4vw,58px);letter-spacing:-.05em;font-weight:570}
+.product-desc{font-size:13px;line-height:1.55;color:var(--muted-2);max-width:460px}
+.product-arrow{font-size:24px;color:rgba(255,255,255,.22);transition:transform .35s var(--ease),color .35s ease}
+.product-row:hover .product-arrow{transform:translateX(5px);color:#fff}
+.product-preview{
+  position:absolute;z-index:2;right:10%;top:50%;width:245px;height:145px;transform:translateY(-50%) translateX(35px);
+  opacity:0;pointer-events:none;overflow:hidden;border-left:1px solid rgba(255,255,255,.13);
+  transition:opacity .45s ease,transform .6s var(--ease)
+}
+.product-row:hover .product-preview{opacity:.82;transform:translateY(-50%)}
+.product-preview img{width:100%;height:100%;object-fit:cover;filter:saturate(.62) brightness(.72)}
+.product-row > *:not(.product-preview){position:relative;z-index:4}
+
+/* TECHNOLOGY */
+.tech-track{height:205svh;position:relative;background:#000}
+.tech-sticky{
+  position:sticky;top:0;height:100svh;min-height:720px;overflow:hidden;display:flex;align-items:center
+}
+.tech-grid{display:grid;grid-template-columns:.83fr 1.17fr;gap:72px;align-items:center}
+.tech-copy{position:relative;z-index:5}
+.fabric{
+  height:min(74svh,730px);position:relative;overflow:hidden;border-left:1px solid var(--line-soft);
+  background:
+    linear-gradient(180deg,#050505,#020202);
+}
+.fabric::before{
+  content:"";position:absolute;inset:-20%;
+  background:
+    linear-gradient(116deg,transparent 23%,rgba(255,255,255,.028) 34%,transparent 46%),
+    linear-gradient(136deg,transparent 35%,rgba(31,49,88,.16) 47%,transparent 58%),
+    linear-gradient(155deg,transparent 42%,rgba(197,164,106,.055) 51%,transparent 59%);
+  transform:translateX(-17%);animation:fabricGlow 9s ease-in-out infinite alternate
+}
+@keyframes fabricGlow{to{transform:translateX(16%)}}
+.fabric svg{position:absolute;inset:0;width:100%;height:100%}
+.tech-caption{
+  position:absolute;z-index:4;left:6%;bottom:7%;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.32)
+}
+.tech-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:34px;border-top:1px solid var(--line)}
+.tech-stat{padding:18px 18px 18px 0;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted-2)}
+.tech-stat b{display:block;color:#fff;font-size:15px;font-weight:550;margin-bottom:5px}
+
+/* FINAL */
+.download{
+  min-height:108svh;display:flex;align-items:center;position:relative;overflow:hidden;background:#000
+}
+.download-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(90deg,#000 0%,rgba(0,0,0,.88) 34%,rgba(0,0,0,.36) 67%,rgba(0,0,0,.22)),
+    linear-gradient(180deg,rgba(0,0,0,.18),transparent 52%,#000),
+    url("/assets/download-scene.jpg") center/cover no-repeat;
+  transform:scale(1.05);filter:saturate(.65) contrast(1.04);will-change:transform,filter
+}
+.download-copy{position:relative;z-index:3;max-width:800px}
+.download .section-title{font-size:clamp(66px,8.5vw,132px)}
+.download-legal{margin-top:22px;color:rgba(255,255,255,.28);font-size:9px;line-height:1.5;max-width:620px}
+
+/* FOOTER */
+footer{background:#000;border-top:1px solid var(--line-soft);padding:58px 0 38px}
+.footer-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:70px}
+.footer-logo{height:27px;width:auto;margin-bottom:15px}
+.footer-copy{color:rgba(255,255,255,.38);font-size:12px;line-height:1.6;max-width:470px}
+.footer-links{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 28px;font-size:11px;color:rgba(255,255,255,.43)}
+.footer-links a:hover{color:#fff}
+.copyright{margin-top:42px;padding-top:22px;border-top:1px solid var(--line-soft);font-size:10px;color:rgba(255,255,255,.27)}
+
+/* MOBILE */
 @media(max-width:980px){
   .nav{display:none}
-  .wrap,.header-inner,.hero-grid,.next-inner{width:min(100% - 36px,1280px)}
-  .hero-track{height:160svh}
-  .hero-grid{grid-template-columns:1fr;display:block;padding-top:84px}
-  h1{font-size:clamp(66px,13vw,105px)}
-  .hero-copy{max-width:760px}
-  .hero-stage{height:56svh;min-height:520px;margin-top:-4px}
-  .hero-woman{right:4%;width:min(62vw,520px)}
-  .phone{left:14%;width:216px;height:446px}
-  .soft-panel{right:8%;width:70%;height:56%}
+  .wrap,.header-inner{width:min(100% - 36px,1320px)}
+  .hero-inner,.medai-grid,.ecosystem-head,.tech-grid,.footer-grid{grid-template-columns:1fr}
+  .hero-track{height:170svh}
+  .hero-inner{align-items:end;padding-bottom:11vh}
+  .hero-bg{
+    background:
+      linear-gradient(180deg,#000 0%,rgba(0,0,0,.62) 30%,rgba(0,0,0,.18) 63%,#000 100%),
+      url("/assets/hero-model.jpg") 66% center/cover no-repeat
+  }
+  .hero-copy{padding-bottom:0;max-width:780px}
+  .hero-credit{display:none}
+  .medai-track{height:190svh}
+  .medai-sticky{padding:100px 0}
+  .medai-grid{gap:44px}
+  .medai-visual{height:58svh;min-height:520px;border-left:0;border-top:1px solid var(--line-soft)}
+  .closete-top{left:24px;right:24px;top:11vh}
+  .look-state{width:min(390px,58vw)}
+  .ecosystem{padding:130px 0 70px}
+  .ecosystem-head{gap:24px;margin-bottom:58px}
+  .product-row{grid-template-columns:52px 1fr 36px;gap:16px;min-height:142px}
+  .product-desc{display:none}
+  .product-preview{display:none}
+  .fabric{height:58svh;min-height:520px;border-left:0;border-top:1px solid var(--line-soft)}
+  .tech-grid{gap:42px}
 }
 @media(max-width:640px){
   .site-header,.header-inner{height:58px}
   .brand img{height:23px}
-  .wrap,.header-inner,.hero-grid,.next-inner{width:min(100% - 28px,1280px)}
+  .wrap,.header-inner{width:min(100% - 28px,1320px)}
   .hero{padding-top:58px;min-height:700px}
-  .hero-track{height:154svh}
-  .hero-grid{padding-top:76px}
-  h1{font-size:clamp(54px,16.6vw,78px);line-height:.88}
+  .hero-track{height:162svh}
+  .hero-inner{height:calc(100svh - 58px);padding-bottom:9vh}
+  .hero-title{font-size:clamp(56px,17vw,82px);line-height:.87}
   .lead{font-size:15px}
-  .store-badge{width:137px;height:43px}
   .store-row{gap:9px;margin-top:24px}
-  .scroll-hint{margin-top:20px}
-  .hero-stage{height:48svh;min-height:420px;margin-top:3px}
-  .soft-panel{right:-8%;bottom:8%;width:88%;height:60%;border-radius:30px}
-  .hero-woman{right:-7%;bottom:-2%;width:min(80vw,430px)}
-  .phone{left:0;bottom:2%;width:160px;height:330px;border-radius:34px;padding:5px}
-  .phone::before{top:9px;width:57px;height:17px}
-  .phone-screen{border-radius:29px;padding:37px 11px 13px}
-  .ui-title{font-size:20px;margin:11px 0 17px}
-  .ui-block{font-size:8px;padding:9px 0}
-  .next{padding:90px 0 130px}
+  .store-badge img{height:41px}.store-badge{height:41px}
+  .google-badge img{height:46px;margin-top:-2px}
+  .hero-scroll{bottom:3.6vh}.hero-scroll span{display:none}
+  .medai-sticky{padding:86px 0}
+  .medai-visual{height:55svh;min-height:470px}
+  .medai-label{font-size:8px}.medai-label b{font-size:11px}
+  .closete-track{height:310svh}
+  .closete-scene{inset:58px 0 0;background-position:center}
+  .garments{inset:58px 0 0}
+  .closete-top{top:9vh;left:18px;right:18px}
+  .closete-top .section-title{font-size:clamp(45px,13.5vw,65px)}
+  .closete-top .lead{display:none}
+  .garment{top:36%;width:58px;height:180px}
+  .g1{left:4%}.g2{left:17%}.g3{left:30%;width:49px}.g4{left:42%;width:66px}.g5{left:56%;width:49px}.g6{left:68%;width:67px}.g7{left:82%}
+  .look-state{right:18px;bottom:5vh;width:min(310px,78vw);padding-left:15px}
+  .look-line{font-size:22px}.look-stage{height:62px}
+  .ecosystem{padding:105px 0 55px}
+  .product-row{grid-template-columns:38px 1fr 24px;min-height:118px}
+  .product-name{font-size:34px}
+  .tech-sticky{padding:84px 0}
+  .fabric{height:48svh;min-height:420px}
+  .download-bg{
+    background:
+      linear-gradient(180deg,#000 0%,rgba(0,0,0,.72) 38%,rgba(0,0,0,.34) 65%,#000 100%),
+      url("/assets/download-scene.jpg") 68% center/cover no-repeat
+  }
+  .download-copy{padding-top:11vh}
+  .download .section-title{font-size:clamp(60px,17vw,84px)}
+  .footer-links{grid-template-columns:1fr 1fr;gap:12px 18px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important;filter:none!important}
 }
 </style>
 </head>
 
 <body>
+<div class="site-shell">
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="#top" aria-label="MedaStaré home">
       <img src="/medastare-logo-white.png" alt="MedaStaré">
     </a>
-    <nav class="nav" aria-label="Primary navigation">
+    <nav class="nav" aria-label="Primary">
       <a href="#medai">MedAI</a>
       <a href="#closete">Closeté</a>
       <a href="#ecosystem">Ecosystem</a>
@@ -210,54 +385,229 @@ h1{
 </header>
 
 <main id="top">
+
 <section class="hero-track" id="heroTrack">
   <div class="hero">
-    <div class="hero-grid">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="wrap hero-inner">
       <div class="hero-copy" id="heroCopy">
-        <div class="kicker">Fashion Intelligence</div>
-        <h1>Fashion<br>intelligence.<br>Reimagined.</h1>
+        <div class="eyebrow">Fashion Intelligence</div>
+        <h1 class="hero-title">Fashion<br>intelligence.<br>Reimagined.</h1>
         <p class="lead">A connected intelligence ecosystem for personal style, wardrobe, visual creation and next-generation fashion experiences.</p>
 
-        <div class="store-row" id="storeRow">
-          <a class="store-badge" href="#download" aria-label="Download on the App Store">
-            <img src="/app-store.png" alt="Download on the App Store">
+        <div class="store-row" id="heroStores">
+          <a class="store-badge apple-badge" href="#download" aria-label="Download on the App Store">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
           </a>
-          <a class="store-badge" href="#download" aria-label="Get it on Google Play">
-            <img src="/google-play.png" alt="Get it on Google Play">
+          <a class="store-badge google-badge" href="#download" aria-label="Get it on Google Play">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
           </a>
         </div>
-
-        <div class="scroll-hint" id="scrollHint"><i></i><span>Scroll to explore</span></div>
+        <div class="store-note">Mobile apps · Launch availability may vary by market.</div>
       </div>
 
-      <div class="hero-stage" id="heroStage">
-        <div class="soft-panel"></div>
+      <div class="hero-scroll" id="heroScroll"><i></i><span>Scroll to explore</span></div>
+      <div class="hero-credit">MedaStaré · Personal Fashion Intelligence</div>
+    </div>
+  </div>
+</section>
 
-        <div class="phone" id="heroPhone">
-          <div class="phone-screen">
-            <div class="ui-label">MEDASTARÉ · INTELLIGENCE</div>
-            <div class="ui-title">Your style.<br>In context.</div>
-            <div class="ui-block"><b>Style DNA</b><span>Minimal · Bold</span></div>
-            <div class="ui-block"><b>Mood</b><span>Confident</span></div>
-            <div class="ui-block"><b>Weather</b><span>18°C</span></div>
-            <div class="ui-block"><b>Occasion</b><span>Dinner</span></div>
-          </div>
-        </div>
+<section class="medai-track" id="medai">
+  <div class="medai-sticky">
+    <div class="wrap medai-grid">
+      <div class="medai-copy">
+        <div class="eyebrow reveal">MedAI™</div>
+        <h2 class="section-title reveal">It doesn’t just suggest.<br>It understands.</h2>
+        <p class="lead reveal">Style becomes more useful when context is understood with it — preference, mood, weather, occasion and personal history working together.</p>
+      </div>
 
-        <img class="hero-woman" id="heroWoman" src="/assets/hero-woman.png" alt="">
+      <div class="medai-visual" id="medaiVisual">
+        <div class="medai-image" id="medaiImage"></div>
+        <i class="medai-rule rule-1"></i>
+        <i class="medai-rule rule-2"></i>
+        <i class="medai-rule rule-3"></i>
+
+        <div class="medai-label ml1"><span>STYLE DNA</span><b>Minimal · Bold</b></div>
+        <div class="medai-label ml2"><span>CONTEXT</span><b>18°C · Dinner</b></div>
+        <div class="medai-label ml3"><span>MOOD</span><b>Confident</b></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="next" id="medai">
-  <div class="next-inner">
-    <small>MedAI™</small>
-    <h2>It doesn’t just suggest.<br>It understands.</h2>
+<section class="closete-track" id="closete">
+  <div class="closete-sticky">
+    <div class="closete-scene" id="closeteScene"></div>
+
+    <div class="closete-top" id="closeteCopy">
+      <div class="eyebrow">Closeté™</div>
+      <h2 class="section-title">Your wardrobe.<br>Now intelligent.</h2>
+      <p class="lead">The wardrobe becomes an active part of the experience — pieces are read, matched to context and composed into a look.</p>
+    </div>
+
+    <div class="garments">
+      <div class="garment g1"><img src="/assets/closete-blazer-black.png" alt=""></div>
+      <div class="garment g2"><img src="/assets/closete-trouser-ivory.png" alt=""></div>
+      <div class="garment g3"><img src="/assets/closete-bag-black.png" alt=""></div>
+      <div class="garment g4"><img src="/assets/closete-dress-black.png" alt=""></div>
+      <div class="garment g5"><img src="/assets/closete-heels-black.png" alt=""></div>
+      <div class="garment g6"><img src="/assets/closete-suit-black.png" alt=""></div>
+      <div class="garment g7"><img src="/assets/closete-coat-black.png" alt=""></div>
+    </div>
+
+    <div class="look-state">
+      <div class="look-kicker">Closeté · Live composition</div>
+      <div class="look-stage">
+        <div class="look-line active">Reading your wardrobe.</div>
+        <div class="look-line">Matching the moment.</div>
+        <div class="look-line">Composing your look.</div>
+        <div class="look-line">Ready.</div>
+      </div>
+      <div class="look-meter"><i class="active"></i><i></i><i></i><i></i></div>
+    </div>
   </div>
 </section>
+
+<section class="ecosystem" id="ecosystem">
+  <div class="wrap">
+    <div class="ecosystem-head">
+      <div>
+        <div class="eyebrow reveal">MedaStaré Ecosystem</div>
+        <h2 class="section-title reveal">One intelligence.<br>Many expressions.</h2>
+      </div>
+      <p class="lead reveal">A connected product family designed around one evolving understanding of personal style, identity and context.</p>
+    </div>
+
+    <div class="product-list">
+      <a class="product-row reveal" href="#medai">
+        <span class="product-no">01</span><span class="product-name">MedAI™</span>
+        <span class="product-desc">Personal intelligence for style, context and conversation.</span><span class="product-arrow">→</span>
+        <span class="product-preview"><img src="/assets/medai-woman.jpg" alt=""></span>
+      </a>
+      <a class="product-row reveal" href="#closete">
+        <span class="product-no">02</span><span class="product-name">Closeté™</span>
+        <span class="product-desc">A wardrobe memory and composition layer.</span><span class="product-arrow">→</span>
+        <span class="product-preview"><img src="/closete-premium.png" alt=""></span>
+      </a>
+      <a class="product-row reveal" href="#">
+        <span class="product-no">03</span><span class="product-name">FashionStare™</span>
+        <span class="product-desc">Context-aware styling and outfit intelligence.</span><span class="product-arrow">→</span>
+        <span class="product-preview"><img src="/assets/hero-model.jpg" alt=""></span>
+      </a>
+      <a class="product-row reveal" href="#">
+        <span class="product-no">04</span><span class="product-name">StyleTrack™</span>
+        <span class="product-desc">A private visual memory of looks, moods and evolution.</span><span class="product-arrow">→</span>
+      </a>
+      <a class="product-row reveal" href="#">
+        <span class="product-no">05</span><span class="product-name">MedaVision™</span>
+        <span class="product-desc">Visual understanding and creative fashion experiences.</span><span class="product-arrow">→</span>
+      </a>
+      <a class="product-row reveal" href="#">
+        <span class="product-no">06</span><span class="product-name">MedArena™</span>
+        <span class="product-desc">Challenges, discovery and participatory style experiences.</span><span class="product-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="tech-track" id="technology">
+  <div class="tech-sticky">
+    <div class="wrap tech-grid">
+      <div class="tech-copy">
+        <div class="eyebrow reveal">Intelligence Layer</div>
+        <h2 class="section-title reveal">Data becomes context.<br>Context becomes taste.</h2>
+        <p class="lead reveal">The system connects personal signals across products without turning the experience into a dashboard. Intelligence stays behind the fashion.</p>
+
+        <div class="tech-stats reveal">
+          <div class="tech-stat"><b>Personalization</b>Style signals and evolving preferences.</div>
+          <div class="tech-stat"><b>Visual understanding</b>Images, wardrobe pieces and composition.</div>
+          <div class="tech-stat"><b>Context</b>Mood, occasion, weather and timing.</div>
+          <div class="tech-stat"><b>Connected memory</b>Products informed by one continuous profile.</div>
+        </div>
+      </div>
+
+      <div class="fabric" id="fabric">
+        <svg viewBox="0 0 900 700" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="silk" x1="0" x2="1">
+              <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+              <stop offset="45%" stop-color="rgba(255,255,255,.16)"/>
+              <stop offset="58%" stop-color="rgba(197,164,106,.16)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+            </linearGradient>
+            <linearGradient id="blueSilk" x1="0" x2="1">
+              <stop offset="0%" stop-color="rgba(22,34,59,0)"/>
+              <stop offset="50%" stop-color="rgba(62,86,139,.22)"/>
+              <stop offset="100%" stop-color="rgba(22,34,59,0)"/>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="url(#silk)" stroke-width="1.2" opacity=".9">
+            <path d="M-60 120 C 170 30, 310 250, 560 140 S 820 40, 980 160"/>
+            <path d="M-40 165 C 160 80, 350 300, 560 190 S 820 90, 960 210"/>
+            <path d="M-20 210 C 180 140, 365 340, 575 245 S 800 155, 950 260"/>
+            <path d="M0 258 C 205 190, 380 385, 590 300 S 820 220, 930 320"/>
+            <path d="M10 310 C 210 250, 395 430, 605 355 S 800 290, 920 380"/>
+            <path d="M20 365 C 220 310, 410 475, 620 410 S 815 355, 930 435"/>
+            <path d="M35 425 C 230 375, 425 520, 640 465 S 820 420, 920 495"/>
+            <path d="M50 490 C 250 445, 440 565, 655 520 S 830 488, 910 555"/>
+          </g>
+          <g fill="none" stroke="url(#blueSilk)" stroke-width="3" opacity=".8">
+            <path d="M-80 520 C 210 390, 330 610, 600 470 S 830 390, 990 515"/>
+            <path d="M-90 80 C 140 210, 330 20, 590 130 S 810 240, 990 105"/>
+          </g>
+        </svg>
+        <div class="tech-caption">MedaStaré · Connected intelligence architecture</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="download" id="download">
+  <div class="download-bg" id="downloadBg"></div>
+  <div class="wrap">
+    <div class="download-copy">
+      <div class="eyebrow reveal">MedaStaré</div>
+      <h2 class="section-title reveal">Your style.<br>Everywhere.</h2>
+      <p class="lead reveal">Fashion intelligence designed to move with you — from wardrobe to discovery, from everyday choices to new expression.</p>
+
+      <div class="store-row reveal">
+        <a class="store-badge apple-badge" href="#" aria-label="Download on the App Store">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+        </a>
+        <a class="store-badge google-badge" href="#" aria-label="Get it on Google Play">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+        </a>
+      </div>
+      <div class="download-legal">App Store and Google Play availability will reflect the applicable launch markets and platform release status.</div>
+    </div>
+  </div>
+</section>
+
 </main>
 
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <img class="footer-logo" src="/medastare-logo-white.png" alt="MedaStaré">
+        <div class="footer-copy">Fashion intelligence, personal technology and next-generation digital experiences.</div>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Use</a>
+        <a href="/privacy-choices">Privacy Choices</a>
+        <a href="/account-deletion">Account Deletion</a>
+        <a href="/ai-data-processing">AI Data Processing</a>
+        <a href="/subscription-terms">Subscription Terms</a>
+        <a href="/support">Support</a>
+        <a href="mailto:partners@medastare.com">Partnerships</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 MedaStaré Inc. · United States</div>
+  </div>
+</footer>
+
+</div>
 <script src="/main.js" defer></script>
 </body>
 </html>
