@@ -34,7 +34,7 @@
         <p>How MedaStaré Inc. handles account, style, wardrobe, media, AI, social, location, subscription, security and website data across the MedaStaré ecosystem.</p>
         <div class="meta">
           <span class="pill">Effective September 21, 2026</span>
-          <span class="pill">Version 2.0</span>
+          <span class="pill">Version 2.1</span>
           <span class="pill">MedaStaré Inc.</span>
         </div>
       </div>
@@ -63,15 +63,16 @@
         <a href="#children">18. Age requirement and minors</a>
         <a href="#deletion">19. Account deletion</a>
         <a href="#subscriptions">20. Store subscriptions and privacy</a>
-        <a href="#cookies">21. Website cookies and similar technologies</a>
-        <a href="#changes">22. Changes to this Policy</a>
-        <a href="#contact">23. Contact and complaints</a>
+        <a href="#creator-payouts">21. Creator payouts and Stripe Connect</a>
+        <a href="#cookies">22. Website cookies and similar technologies</a>
+        <a href="#changes">23. Changes to this Policy</a>
+        <a href="#contact">24. Contact and complaints</a>
       </aside>
 
       <article class="document">
         <div class="summary">
           <h3>Plain language summary</h3>
-          <p>MedaStaré processes information needed to operate accounts and provide styling, wardrobe, visual, beauty, AI, social, weather-aware and subscription features. Depending on the feature, this can include profile details, style preferences, wardrobe items, photos or videos you choose to provide, AI prompts and chat history, limited body or cycle context, coarse location, social activity and store entitlement information.</p>
+          <p>MedaStaré processes information needed to operate accounts and provide styling, wardrobe, visual, beauty, AI, social, weather-aware and subscription features. Depending on the feature, this can include profile details, style preferences, wardrobe items, photos or videos you choose to provide, AI prompts and chat history, limited body or cycle context, coarse location, social activity, store entitlement information and creator payout information processed through Stripe Connect.</p>
           <p>Optional features may involve third-party providers. We limit the data sent to what is reasonably necessary for the requested function and provide additional notices or controls where required. Private photos, prompts, body information and cycle information are not sold for money or used by MedaStaré for cross-context behavioral advertising.</p>
           <p>You can initiate account deletion in the app. Other privacy requests, including access, correction, portability or objection where applicable, may be submitted through our Privacy Choices page or support channel. Not every privacy right or export function is automated in the app.</p>
           <div class="note">
@@ -147,6 +148,15 @@
             <li>Refund, revocation or cancellation status made available by the applicable store.</li>
             <li>For Apple purchases, verified App Store transaction information. For Google Play purchases, corresponding Google Play information is processed when Google Play billing is enabled.</li>
             <li>MedaStaré does not receive full payment card details from Apple or Google for store-processed in-app subscriptions.</li>
+          </ul>
+
+          <h3>Creator payout and Stripe Connect data</h3>
+          <ul>
+            <li>If you participate in an eligible creator, StarGift or payout program, MedaStaré may create or connect a Stripe Connect account so Stripe can support identity verification, payout onboarding, financial-account setup and transfers.</li>
+            <li>Depending on country and Stripe requirements, Stripe may ask for legal name, date of birth, address, tax or business information, government-issued identification, identity-verification information and bank-account or eligible payout-card details.</li>
+            <li>Creator onboarding is presented through Stripe Connect components. Sensitive payout and identity information entered into Stripe's onboarding flow is transmitted to Stripe for processing and verification.</li>
+            <li>MedaStaré may receive or access the information reasonably necessary to operate the creator program, including a Stripe connected-account identifier, country, business or individual account status, verification requirements or status, enabled capabilities, payout status, transfer records, balance or payout information, and limited or masked financial-account metadata made available by Stripe.</li>
+            <li>MedaStaré is designed not to store complete payment-card numbers, CVC/security codes, online-banking passwords or other full financial credentials submitted through Stripe Connect in MedaStaré's own application database. Where Stripe returns limited identifiers such as a bank or card type, institution name, last digits or account status, MedaStaré may process that limited information for payout support, reconciliation, fraud prevention and legal compliance.</li>
           </ul>
 
           <h3>Device, network, log and diagnostic data</h3>
@@ -349,6 +359,11 @@
                 <td>Weather and location-context providers</td>
                 <td>MET Norway Locationforecast, OpenStreetMap Nominatim</td>
                 <td>Weather-aware styling and city/location resolution.</td>
+              </tr>
+              <tr>
+                <td>Creator payout, identity-verification and financial infrastructure</td>
+                <td>Stripe Connect</td>
+                <td>Creator onboarding, identity and business verification, financial-account setup, transfers, payouts, payout status, fraud prevention, compliance and related support.</td>
               </tr>
               <tr>
                 <td>App stores and identity platforms</td>
@@ -571,6 +586,7 @@
           </div>
           <p>The account-deletion workflow is designed to remove active account database records and user media covered by the workflow. Under the current storage configuration, deleted Cloud Storage media may remain recoverable in provider soft-delete for up to approximately 7 days before final provider-level expiration. Certain transaction, audit, moderation, competition, fraud, legal or compliance records may be retained or de-identified where reasonably necessary and legally permitted.</p>
           <p>Deletion of a MedaStaré account cannot delete copies that other users independently created outside MedaStaré or information controlled by independent third parties. Provider-side deletion is also subject to the provider's applicable terms, technical capability and legal retention requirements.</p>
+          <p>If you have a Stripe Connect creator account, deleting your MedaStaré account does not necessarily cause immediate deletion of information Stripe is required or permitted to retain for identity verification, anti-fraud, anti-money-laundering, tax, payment, payout or other legal and compliance purposes. MedaStaré may request or initiate appropriate connected-account closure or de-linking where supported, but Stripe's retention of Stripe-controlled records is governed by Stripe's own legal obligations and privacy terms.</p>
           <p>More information is available on the <a href="/account-deletion"><strong>Account and Data Deletion page</strong></a>.</p>
         </section>
 
@@ -581,8 +597,30 @@
           <p>Subscription cancellation and account deletion are separate. See the <a href="/subscription-terms"><strong>Subscription Terms</strong></a> for billing, renewal, cancellation and refund information.</p>
         </section>
 
+        <section id="creator-payouts">
+          <h2>21. Creator payouts and Stripe Connect</h2>
+          <p>MedaStaré uses Stripe Connect for eligible creator payout functions, including creator onboarding, verification, financial-account setup, transfers and payouts. Stripe is a separate financial-technology provider and processes information under its own privacy terms in addition to any processing it performs for or in connection with MedaStaré's Stripe Connect integration.</p>
+
+          <h3>What creators may be asked to provide</h3>
+          <p>Depending on the creator's country, legal status and Stripe requirements, the Stripe Connect onboarding flow may request personal or business identity information, address, date of birth, tax information, government identification, verification documents and a bank account or eligible payout card. The exact fields are determined by Stripe's requirements for the connected account and available payout capabilities.</p>
+
+          <h3>What happens to bank or card information</h3>
+          <div class="note">
+            <p>Financial details entered into Stripe Connect onboarding are submitted through Stripe's embedded components for Stripe to process. MedaStaré does not need a creator's complete card number, CVC, online-banking password or similar full financial credential in order to operate the payout program, and MedaStaré is designed not to store those full credentials in its own application database.</p>
+          </div>
+          <p>Stripe may provide MedaStaré with limited or masked financial-account information and account status needed to operate payouts, such as the connected-account ID, payout method type, institution or bank name where available, country, last digits, verification status, capability status, payout status, transfer and balance information, and other operational metadata. MedaStaré may use that information to send creator earnings, reconcile transfers, answer payout-support questions, prevent fraud and meet legal or accounting obligations.</p>
+
+          <h3>Identity verification and compliance</h3>
+          <p>Stripe Connect can collect and validate identity, business and verification information, including document uploads where required. MedaStaré may receive verification requirements, status or other information available through Stripe's APIs that is reasonably necessary to administer the creator relationship, comply with applicable legal obligations, investigate fraud or support the creator. MedaStaré does not represent that Stripe will immediately delete verification, transaction or financial records when a creator leaves MedaStaré because Stripe may have independent legal and regulatory retention obligations.</p>
+
+          <h3>Creator payouts are different from user subscriptions</h3>
+          <p>Stripe Connect is used for creator payout infrastructure and is not the payment processor for ordinary MedaStaré mobile subscription purchases made through the Apple App Store or Google Play. App Store and Google Play subscription billing remains subject to the applicable store's billing and refund system.</p>
+
+          <p>Creators should never send complete bank-account credentials, payment-card numbers, CVC codes, online-banking passwords or identity documents to MedaStaré by ordinary email or chat unless MedaStaré provides a specifically designated secure channel for that purpose.</p>
+        </section>
+
         <section id="cookies">
-          <h2>21. Website cookies and similar technologies</h2>
+          <h2>22. Website cookies and similar technologies</h2>
           <p>The MedaStaré website uses technologies necessary for security, delivery, preferences and basic operation. Where optional analytics, session replay or marketing technologies are enabled, MedaStaré will use a consent mechanism where applicable law requires one.</p>
           <p>Contentsquare may be used for website experience analytics and Session Replay where enabled. MedaStaré has selected a full-masking configuration intended to prevent visible page content from being reproduced in replay. Technical interaction and device/session information may still be collected as described in Section 10. Masking choices do not replace consent where consent is legally required.</p>
           <p>MedaStaré does not intentionally activate advertising cookies to collect private app content. If marketing or attribution technologies are introduced, the Cookie Policy and consent controls will be updated before use where required.</p>
@@ -590,14 +628,14 @@
         </section>
 
         <section id="changes">
-          <h2>22. Changes to this Policy</h2>
+          <h2>23. Changes to this Policy</h2>
           <p>MedaStaré may update this Policy to reflect product, provider, legal, security or operational changes. The effective date and version will be updated when a new version is published.</p>
           <p>For material changes, MedaStaré will provide additional notice where required, which may include an in-app notice, email, website notice or renewed consent for processing that legally requires a new consent. A change to this Policy does not retroactively make previously unlawful processing lawful and does not remove mandatory rights.</p>
           <p>Historical versions may be retained internally for compliance, dispute resolution and audit purposes.</p>
         </section>
 
         <section id="contact">
-          <h2>23. Contact and complaints</h2>
+          <h2>24. Contact and complaints</h2>
           <p>Questions, privacy requests and complaints may be submitted through the <a href="/privacy-choices"><strong>Privacy Choices page</strong></a> or sent to <a href="mailto:support@medastare.com?subject=Privacy%20Request"><strong>support@medastare.com</strong></a>.</p>
           <p>Please do not email passwords, Apple or Google account credentials, complete payment-card information, authentication tokens, intimate images, medical records or other information that is not necessary to identify and process your request.</p>
           <p>You may have the right to complain to a data-protection authority or other regulator in your jurisdiction. MedaStaré may ask you to use our request channel first where applicable procedure permits or requires it, but nothing in this Policy limits a right to contact a regulator where the law gives you that right.</p>
