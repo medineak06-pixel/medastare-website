@@ -16,3 +16,4 @@ This package keeps the existing full website and adds:
 - Apple-style liquid glass buttons
 - white browser-tab logo and `MedaStaré` page title
 - tuned layouts for desktop, tablet, and mobile
+Legal deploy refresh
