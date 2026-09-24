@@ -1,0 +1,10 @@
+# Source artwork and tooling — never served, so keep it out of the deployment.
+# The production images live in assets/v4/ and are generated from these.
+
+website/
+assets/*.png
+assets/images/
+
+preview.js
+package.json
+*.md
