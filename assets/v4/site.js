@@ -73,11 +73,7 @@
     });
     if (!any) {
       var block = $('#social-block');
-      if (block) {
-        var h = $('h3', block), row = $('.social', block);
-        if (row) row.remove();
-        if (h) h.remove();
-      }
+      if (block) block.remove();
     }
   }
 

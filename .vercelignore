@@ -4,6 +4,7 @@
 website/
 assets/*.png
 assets/images/
+assets/404/
 
 preview.js
 package.json

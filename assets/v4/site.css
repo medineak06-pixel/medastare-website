@@ -511,7 +511,6 @@ body.is-locked .hdr{ transform:none; }
 }
 .social a:hover{ border-color:var(--gold-line); color:var(--champagne-l); transform:translateY(-2px); }
 .social svg{ width:15px; height:15px; }
-.ftr__right .stores{ margin-top:18px; }
 
 .ftr__bar{
   margin-top:clamp(32px,4.2vh,50px); padding-top:20px; border-top:1px solid var(--line-2);
@@ -863,7 +862,7 @@ body.is-locked .hdr{ transform:none; }
 }
 .wcard__f{ transform-style:preserve-3d; animation:floaty var(--fdur,12s) var(--ease-soft) infinite; animation-delay:var(--fdel,0s); }
 .wcard__t{
-  transform:rotateY(var(--ry,-18deg)) rotateX(var(--rx,6deg)) rotateZ(var(--rz,0deg)) translateZ(var(--wz,0px));
+  transform:rotateY(var(--ry,-18deg)) rotateX(var(--rx,6deg)) rotateZ(var(--rz,0deg)) translateZ(var(--wz,0px)) skewY(var(--sk,0deg));
   transform-style:preserve-3d;
   border-radius:13px;
 }
@@ -902,6 +901,8 @@ body.is-locked .hdr{ transform:none; }
 @media (max-width:760px){
   .wstage{ max-width:100%; height:clamp(360px,54vh,440px); perspective:1000px; }
   .wcard{ width:var(--wwm, clamp(100px,26vw,128px)); }
+  /* the desktop layout reaches past the stage edges; phones keep a tighter cluster */
+  .wcard, .wchip{ left:var(--wxm, var(--wx)); top:var(--wym, var(--wy)); }
   .wcard::after{ display:none; }
 }
 @media (prefers-reduced-motion:reduce){
@@ -961,9 +962,22 @@ body.is-locked .hdr{ transform:none; }
 .detect{ rotate:y 16deg; }
 .reticle{ rotate:y 18deg; }
 .erarail{ rotate:y 18deg; }
-.agrid figure{ rotate:y 13deg; }
-.xcard{ rotate:y 9deg; }
 .citytile{ rotate:y 11deg; }
+
+/* MuseMatch opens the same way: each column turns its inner edge away around
+   its outer edge, with a wider aisle between the two columns. */
+#musematch .fband__stage{ perspective-origin:50% 300%; }
+.agrid figure:nth-child(odd){ rotate:y 4deg; transform-origin:0 50%; }
+.agrid figure:nth-child(even){ rotate:y -4deg; transform-origin:100% 50%; }
+.agrid figure:nth-child(even) figcaption{ left:auto; right:10px; }
+
+/* MedArena fans toward its centre: the outer cards turn their inner edge away,
+   and an eye line far below the row makes both of their long edges lean in
+   toward the middle card, which faces the viewer straight on. */
+.xgrid{ perspective-origin:50% 400%; }
+.xcard:nth-child(1){ rotate:y 6deg; transform-origin:0 50%; }
+.xcard:nth-child(2){ translate:0 11.5%; }
+.xcard:nth-child(3){ rotate:y -6deg; transform-origin:100% 50%; }
 
 /* larger stage cards */
 .detect{ width:clamp(188px,16.4vw,232px); }
@@ -972,7 +986,7 @@ body.is-locked .hdr{ transform:none; }
 .reticle{ padding:20px; width:clamp(210px,18.6vw,266px); }
 .erarail{ padding:25px 30px; width:clamp(250px,22.6vw,320px); }
 .erarail li b{ font-size:clamp(19px,1.85vw,25px); }
-.agrid{ max-width:470px; }
+.agrid{ --acg:clamp(24px,4.6vw,88px); column-gap:var(--acg); max-width:calc(456px + var(--acg)); }
 .mini{ padding:15px 15px 15px 18px; }
 .mini figure{ width:60px; height:60px; }
 .mini b{ font-size:16px; }
@@ -992,6 +1006,11 @@ body.is-locked .hdr{ transform:none; }
 
 /* gentler angles where the columns are narrow */
 @media (max-width:760px){
-  .mini,.agrid figure,.xcard,.citytile{ rotate:y 8deg; }
+  .mini,.xcard,.xcard:nth-child(n),.citytile{ rotate:y 8deg; }
+  .xcard:nth-child(n){ transform-origin:50% 50%; translate:none; }
+  .agrid{ --acg:18px; }
+  .agrid figure:nth-child(odd){ rotate:y 7deg; }
+  .agrid figure:nth-child(even){ rotate:y -7deg; }
+  .xgrid{ perspective-origin:50% 50%; }
   .detect,.reticle,.erarail{ rotate:y 10deg; }
 }
