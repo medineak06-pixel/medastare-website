@@ -74,6 +74,12 @@ const server = http.createServer((req, res) => {
 
   if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {
     console.log('404  ' + rel);
+    // Vercel serves /404.html with a 404 status for any unmatched route.
+    const notFound = path.join(ROOT, '404.html');
+    if (fs.existsSync(notFound)) {
+      res.writeHead(404, { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-cache' });
+      return fs.createReadStream(notFound).pipe(res);
+    }
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     return res.end('404 — not found: ' + rel);
   }
