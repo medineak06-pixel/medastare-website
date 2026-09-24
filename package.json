@@ -1,0 +1,10 @@
+{
+  "name": "medastare-website",
+  "version": "4.0.0",
+  "private": true,
+  "description": "MedaStare Inc. — marketing site and legal/compliance pages.",
+  "scripts": {
+    "start": "node preview.js",
+    "dev": "node preview.js"
+  }
+}

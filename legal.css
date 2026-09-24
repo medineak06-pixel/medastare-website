@@ -67,10 +67,10 @@ th,td{text-align:left;vertical-align:top;padding:15px;border-right:1px solid var
 .logo{
   font-size:0;
   color:transparent;
-  background-image:url('/medastare-logo.png'),linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.02));
+  background-image:url('/assets/v4/logo-mark.png'),linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.02));
   background-repeat:no-repeat,no-repeat;
   background-position:center,center;
-  background-size:27px 27px,cover;
+  background-size:30px 30px,cover;
 }
 .logo:after{content:none}
 .wordmark>span:last-child{
