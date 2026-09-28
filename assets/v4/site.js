@@ -11,7 +11,7 @@
      social icons with no URL are removed rather than left as dead links.     */
   var STORE_LINKS = {
     ios:     '',   // e.g. 'https://apps.apple.com/app/medastare/id0000000000'
-    android: ''    // e.g. 'https://play.google.com/store/apps/details?id=com.medastare.app'
+    android: 'https://play.google.com/store/apps/details?id=com.medastare.app&hl=en'
   };
 
   var SOCIAL_LINKS = {
