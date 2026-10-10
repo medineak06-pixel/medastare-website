@@ -62,7 +62,183 @@
   .hero__actions .hero__store.meda-store-badge[data-store="android"],
   .store-actions .store-action.meda-store-badge[data-store="android"] { height:56px; min-height:56px; }
 }
-</style></head>
+</style>
+<style id="medastare-cinematic-motion-v6">
+
+/* MEDASTARÉ / CINEMATIC MOTION EDITION
+   Additive animation layer only. Original V4 style, content, media and interactions remain untouched.
+   Uses composited movement, progressive enhancement and reduced-motion support. */
+@media (prefers-reduced-motion: no-preference) {
+  /* 01 — The cinematic reveal: one restrained, editorial opening, then scroll-scrubbed light. */
+  body.ms-cinema .hero__fade { overflow: hidden; }
+  body.ms-cinema .hero__fade::after {
+    content: ""; position: absolute; inset: -28%; pointer-events: none;
+    background: linear-gradient(107deg, transparent 39%, rgba(239,204,143,.03) 44%,
+      rgba(248,228,181,.12) 50%, rgba(219,165,89,.035) 56%, transparent 65%);
+    opacity: var(--ms-hero-light-opacity,.56);
+    transform: translate3d(var(--ms-hero-beam-x,-16%),0,0) rotate(-4deg);
+    will-change: transform; mix-blend-mode:screen;
+  }
+  body.ms-cinema .hero h1 {
+    animation: ms-cinema-heading 1.3s cubic-bezier(.16,1,.3,1) both;
+    animation-delay: .12s;
+  }
+  body.ms-cinema .hero__eyebrow {
+    animation: ms-cinema-rise .85s cubic-bezier(.16,1,.3,1) both;
+  }
+  body.ms-cinema .hero__desc,
+  body.ms-cinema .hero__actions {
+    animation: ms-cinema-rise 1.08s cubic-bezier(.16,1,.3,1) both;
+    animation-delay: .46s;
+  }
+  body.ms-cinema .hero__index {
+    animation: ms-cinema-rise 1.16s cubic-bezier(.16,1,.3,1) both;
+    animation-delay: .7s;
+  }
+  /* 02 — iPhone-style copy lift. No text is hidden without JS; existing V4 transforms remain. */
+  body.ms-cinema .chapter__title,
+  body.ms-cinema .edit__title,
+  body.ms-cinema .arena-exp__head h3,
+  body.ms-cinema .markets__head h2,
+  body.ms-cinema .final__content h2 {
+    -webkit-mask-image: linear-gradient(100deg, #000 0%, #000 var(--ms-ink-edge,100%),
+      rgba(0,0,0,.40) calc(var(--ms-ink-edge,100%) + 19%), rgba(0,0,0,.40) 100%);
+    mask-image: linear-gradient(100deg, #000 0%, #000 var(--ms-ink-edge,100%),
+      rgba(0,0,0,.40) calc(var(--ms-ink-edge,100%) + 19%), rgba(0,0,0,.40) 100%);
+  }
+  /* 03 — Optical gold aperture across each product photograph; independent of V4 parallax. */
+  body.ms-cinema .chapter__visual { isolation:isolate; }
+  body.ms-cinema .chapter__visual::after {
+    content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+    background: radial-gradient(ellipse 52% 72% at var(--ms-optical-x,58%) 34%,
+      rgba(243,209,146,.20), rgba(198,141,68,.055) 38%, transparent 75%),
+      linear-gradient(180deg, rgba(239,211,163,.08), transparent 24%, transparent 78%, rgba(198,151,85,.045));
+    opacity:var(--ms-optical-opacity,0); mix-blend-mode:screen;
+    will-change:opacity;
+  }
+  /* 04 — Each original clickable editorial artwork gets one photographic light sweep. */
+  body.ms-cinema .edit__item::before {
+    content:""; position:absolute; z-index:2; inset:-20%; pointer-events:none;
+    background:linear-gradient(106deg,transparent 33%,rgba(255,236,193,.04) 44%,
+      rgba(245,214,157,.26) 49%,rgba(255,231,191,.07) 56%,transparent 66%);
+    transform:translate3d(-150%,0,0); opacity:0; mix-blend-mode:screen;
+  }
+  body.ms-cinema .edit__item.ms-cinema-seen::before {
+    animation:ms-cinema-gallery-flare 1.5s cubic-bezier(.16,.7,.24,1) both;
+    animation-delay:var(--ms-card-delay,0ms);
+  }
+  /* 05 — Six cities: thin gold horizon lines announce the global markets in sequence. */
+  body.ms-cinema .city::after {
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px; z-index:5;
+    background:linear-gradient(90deg,transparent,rgba(228,194,131,.95) 42%,rgba(254,233,187,.9) 68%,transparent);
+    transform:scaleX(0); transform-origin:left center; opacity:0; pointer-events:none;
+  }
+  body.ms-cinema .city.ms-cinema-seen::after {
+    animation:ms-cinema-city-horizon 1.6s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:var(--ms-card-delay,0ms);
+  }
+  /* 06 — Gold line for the three existing MedArena experiences, no card movement changes. */
+  body.ms-cinema .experience::after {
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+    z-index:4;pointer-events:none; background:linear-gradient(90deg,transparent,#d8b980,transparent);
+    transform:scaleX(0);opacity:0;transform-origin:50% 50%;
+  }
+  body.ms-cinema .experience.ms-cinema-seen::after {
+    animation:ms-cinema-experience-line 1.4s ease-out both;
+    animation-delay:var(--ms-card-delay,0ms);
+  }
+  /* 07 — Finale: one slower beam and staggered existing app-store badges. */
+  body.ms-cinema .final__fade { overflow:hidden; }
+  body.ms-cinema .final__fade::after {
+    content:"";pointer-events:none;position:absolute;inset:-27%;
+    background:linear-gradient(108deg,transparent 34%,rgba(213,163,96,.02) 43%,
+      rgba(247,219,156,.14) 52%,transparent 63%);
+    transform:translate3d(var(--ms-finale-beam-x,-55%),0,0);
+    opacity:var(--ms-finale-glow,.35);mix-blend-mode:screen;
+    will-change:transform;
+  }
+  body.ms-cinema .final.ms-cinema-seen .final__content .eyebrow {
+    animation:ms-cinema-rise 1s cubic-bezier(.16,1,.3,1) both;
+  }
+  body.ms-cinema .final.ms-cinema-seen .store-actions > a:first-child {
+    animation:ms-cinema-badge-entry .95s cubic-bezier(.16,1,.3,1) .16s both;
+  }
+  body.ms-cinema .final.ms-cinema-seen .store-actions > a:nth-child(2) {
+    animation:ms-cinema-badge-entry .95s cubic-bezier(.16,1,.3,1) .29s both;
+  }
+  /* 08 — The existing 16-image fullscreen art viewer stays interactive. Its transition is upgraded only. */
+  body.ms-cinema .artviewer:not([hidden]) {
+    animation:ms-cinema-gallery-curtain .35s ease-out both;
+  }
+  body.ms-cinema .artviewer:not([hidden]) .artviewer__img {
+    animation:ms-cinema-art-open .65s cubic-bezier(.16,1,.3,1) both;
+  }
+  body.ms-cinema .artviewer:not([hidden]) .artviewer__img.ms-cinema-image-change {
+    animation:ms-cinema-art-next .52s cubic-bezier(.16,1,.3,1) both;
+  }
+  @keyframes ms-cinema-heading {
+    0% {opacity:0;filter:blur(9px);transform:translate3d(0,34px,0) scale(.988)}
+    60% {filter:blur(1px)}
+    100% {opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}
+  }
+  @keyframes ms-cinema-rise {
+    from {opacity:0;transform:translate3d(0,18px,0)}
+    to {opacity:1;transform:translate3d(0,0,0)}
+  }
+  @keyframes ms-cinema-gallery-flare {
+    0% {opacity:0;transform:translate3d(-145%,0,0)}
+    25% {opacity:.44}
+    74% {opacity:.34}
+    100% {opacity:0;transform:translate3d(145%,0,0)}
+  }
+  @keyframes ms-cinema-city-horizon {
+    0% {transform:scaleX(0);opacity:0}
+    35% {opacity:.8}
+    100% {transform:scaleX(1);opacity:.55}
+  }
+  @keyframes ms-cinema-experience-line {
+    0%{opacity:0;transform:scaleX(0)}
+    100%{opacity:.48;transform:scaleX(1)}
+  }
+  @keyframes ms-cinema-badge-entry {
+    from{opacity:0;transform:translate3d(0,22px,0) scale(.975);filter:brightness(.7)}
+    to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:brightness(1)}
+  }
+  @keyframes ms-cinema-gallery-curtain {
+    from {opacity:0;backdrop-filter:blur(0)}
+    to {opacity:1;backdrop-filter:blur(20px)}
+  }
+  @keyframes ms-cinema-art-open {
+    from {opacity:0;transform:translate3d(0,20px,0) scale(.967);filter:brightness(.76)}
+    to {opacity:1;transform:translate3d(0,0,0) scale(1);filter:brightness(1)}
+  }
+  @keyframes ms-cinema-art-next {
+    from {opacity:.2;transform:translate3d(0,5px,0) scale(.98)}
+    to {opacity:1;transform:translate3d(0,0,0) scale(1)}
+  }
+  /* Mobiles: retain the original layout and touch targets, suppress expensive raster effects. */
+  @media(max-width:700px) {
+    body.ms-cinema .hero h1 {animation-duration:1.08s}
+    body.ms-cinema .hero__fade::after,
+    body.ms-cinema .final__fade::after {mix-blend-mode:normal;opacity:.42}
+    body.ms-cinema .chapter__visual::after {mix-blend-mode:normal}
+    body.ms-cinema .artviewer:not([hidden]) {animation-duration:.24s}
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.ms-cinema .hero__fade::after,
+  body.ms-cinema .chapter__visual::after,
+  body.ms-cinema .edit__item::before,
+  body.ms-cinema .city::after,
+  body.ms-cinema .experience::after,
+  body.ms-cinema .final__fade::after {display:none!important}
+  body.ms-cinema .chapter__title,body.ms-cinema .edit__title,
+  body.ms-cinema .arena-exp__head h3,body.ms-cinema .markets__head h2,
+  body.ms-cinema .final__content h2 {-webkit-mask-image:none!important;mask-image:none!important}
+}
+
+</style>
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a><div aria-hidden="true" class="progress" id="progress"></div>
 
@@ -229,4 +405,113 @@
     hideNotice = setTimeout(() => toast.classList.remove('visible'), 4400);
   }, true);
 })();
-</script></body></html>
+</script>
+<script id="medastare-cinematic-motion-v6-script">
+
+/* MedaStaré Cinematic — motion-only progressive enhancement of the existing V4 page.
+   Does not remove nodes, change assets, handle store clicks, override V4 transforms or change any text. */
+(() => {
+  'use strict';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      navigator.connection?.saveData || !('requestAnimationFrame' in window)) return;
+  const body = document.body;
+  body.classList.add('ms-cinema');
+  const clamp = n => Math.min(1, Math.max(0, n));
+  const smooth = n => {n=clamp(n);return n*n*(3-2*n)};
+  const put = (element,name,value) => {if(element) element.style.setProperty(name,value)};
+  const hero=document.querySelector('.hero');
+  const chapters=[...document.querySelectorAll('.chapter')];
+  const titleGroups=[...document.querySelectorAll('.edit,.arena-exp,.markets,.final')];
+  const final=document.querySelector('.final');
+  let queued=false;
+  function update(){
+    queued=false;
+    if(document.hidden)return;
+    const vh=window.innerHeight||800;
+    if(hero){
+      const r=hero.getBoundingClientRect();
+      if(r.bottom>-100&&r.top<vh*1.3){
+        const p=smooth(-r.top / (r.height*.83));
+        put(hero,'--ms-hero-beam-x',(-28+86*p).toFixed(2)+'%');
+        put(hero,'--ms-hero-light-opacity',(.38+.42*Math.sin((p*.85+.12)*Math.PI)).toFixed(3));
+      }
+    }
+    // This is independent of the V4 per-section parallax and applies only to lighting/ink masks.
+    for(const section of chapters){
+      const r=section.getBoundingClientRect();
+      if(r.bottom<-70||r.top>vh*1.27)continue;
+      const title=section.querySelector('.chapter__title');
+      if(title){
+        const t=title.getBoundingClientRect();
+        const p=smooth((vh*.88-t.top)/(vh*.57));
+        put(title,'--ms-ink-edge',(20+80*p).toFixed(2)+'%');
+      }
+      const visual=section.querySelector('.chapter__visual');
+      const p=smooth((vh*.91-r.top)/(vh+r.height*.46));
+      put(visual,'--ms-optical-x',(22+75*p).toFixed(2)+'%');
+      put(visual,'--ms-optical-opacity',(Math.max(0,Math.sin(Math.PI*p))*.65).toFixed(3));
+    }
+    for(const group of titleGroups){
+      const r=group.getBoundingClientRect();
+      if(r.bottom<0||r.top>vh*1.25)continue;
+      const title=group.querySelector('.edit__title,.arena-exp__head h3,.markets__head h2,.final__content h2');
+      if(!title)continue;
+      const t=title.getBoundingClientRect();
+      const p=smooth((vh*.88-t.top)/(vh*.55));
+      put(title,'--ms-ink-edge',(17+83*p).toFixed(2)+'%');
+    }
+    if(final){
+      const r=final.getBoundingClientRect();
+      if(r.bottom>0&&r.top<vh*1.22){
+        const p=smooth((vh-r.top)/(vh+r.height*.63));
+        put(final,'--ms-finale-beam-x',(-55+123*p).toFixed(2)+'%');
+        put(final,'--ms-finale-glow',(.16+.72*Math.sin(p*Math.PI)).toFixed(3));
+      }
+    }
+  }
+  function schedule(){if(!queued){queued=true;requestAnimationFrame(update)}}
+  addEventListener('scroll',schedule,{passive:true});
+  addEventListener('resize',schedule,{passive:true});
+  addEventListener('pageshow',schedule);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});
+  schedule();
+  // One-time light accents. No transforms or event handlers are taken away from gallery cards.
+  if('IntersectionObserver' in window){
+    const targets=[...document.querySelectorAll('.edit__item,.city,.experience,.final')];
+    const watcher=new IntersectionObserver(entries=>{
+      for(const entry of entries){
+        if(!entry.isIntersecting)continue;
+        entry.target.classList.add('ms-cinema-seen');
+        watcher.unobserve(entry.target);
+      }
+    },{threshold:.07,rootMargin:'0px 0px -9% 0px'});
+    targets.forEach((el,i)=>{
+      put(el,'--ms-card-delay',((i%4)*110)+'ms');
+      watcher.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.final,.edit__item,.city,.experience')
+      .forEach(el=>el.classList.add('ms-cinema-seen'));
+  }
+  // Animate transitions between images in the *existing* gallery, without touching its controls.
+  const viewer=document.querySelector('#artviewer');
+  const picture=viewer?.querySelector('.artviewer__img');
+  if(viewer&&picture&&'MutationObserver' in window){
+    let initial=true;
+    const obs=new MutationObserver(()=>{
+      if(viewer.hidden)return;
+      if(initial){initial=false;return;}
+      picture.classList.remove('ms-cinema-image-change');
+      void picture.offsetWidth;
+      picture.classList.add('ms-cinema-image-change');
+    });
+    obs.observe(picture,{attributes:true,attributeFilter:['src']});
+    const reset=new MutationObserver(()=>{
+      if(viewer.hidden){initial=true;picture.classList.remove('ms-cinema-image-change')}
+    });
+    reset.observe(viewer,{attributes:true,attributeFilter:['hidden']});
+  }
+})();
+
+</script>
+</body></html>
