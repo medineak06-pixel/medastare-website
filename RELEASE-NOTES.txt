@@ -1,0 +1,18 @@
+MedaStaré V4 — PUBLISH CANDIDATE
+
+Upload CONTENTS of this folder to the actual live website root, keeping all subfolders. Do NOT upload just index.html.
+
+Changes from preview:
+- Removed noindex/nofollow.
+- Removed preview banner.
+- Updated production page title and social image metadata.
+- Connected Android button to the verified Google Play MedaStaré listing.
+- App Store buttons remain not yet active until verified public iOS URL is provided.
+
+IMPORTANT PRE-LAUNCH ITEMS:
+- Verify website deployment account/project and domain medastare.com / www.medastare.com.
+- Verify legal/footer routes (/privacy, /terms, /delete-account, etc.) are served by production; they are links not included in this ZIP.
+- If hosted on Vercel, your existing CSP must allow styles from fonts.googleapis.com and fonts from fonts.gstatic.com, or editorial serif font will be blocked. Do not overwrite existing Vercel config/API route without checking.
+- Verify App Store listing link before enabling iOS download button.
+- Keep existing api/, legal pages, other production routes and settings.
+- This package has not been deployed or pushed to main.

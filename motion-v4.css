@@ -1,0 +1,57 @@
+/* MedaStaré Luxury Scroll Experience V4 — retains every V2/V3 design decision. */
+:root{--motion-ease:cubic-bezier(.18,.72,.22,1)}
+/* Remove the ornamental but nonfunctional double-line header button on every viewport. */
+.menu-toggle,.mobile-menu{display:none!important}
+/* Keep the very same hero composition; its scale/position now scrub with scroll. */
+body.motion-v4 .hero__img img{animation:none!important;transform:translate3d(0,var(--v4-hero-y,0px),0) scale(var(--v4-hero-scale,1.065))!important;transform-origin:50% 34%;will-change:transform}
+body.motion-v4 .hero__content{transform:translate3d(0,var(--v4-hero-copy-y,0px),0);opacity:var(--v4-hero-copy-opacity,1);will-change:transform,opacity}
+body.motion-v4 .hero__bottom{transform:translate3d(0,var(--v4-hero-bottom-y,0px),0);opacity:var(--v4-hero-bottom-opacity,1)}
+/* Large but controlled kinetic typography; animated on entrance and driven by scroll. */
+body.motion-v4 .chapter__copy .chapter__title{transform:translate3d(0,var(--v4-title-y,0px),0);opacity:var(--v4-title-opacity,1);will-change:transform,opacity}
+body.motion-v4 .chapter__copy .chapter__desc{transform:translate3d(0,var(--v4-desc-y,0px),0);opacity:var(--v4-desc-opacity,1)}
+body.motion-v4 .chapter__copy .chapter__overline,
+body.motion-v4 .chapter__copy .chapter__product{transform:translate3d(0,var(--v4-kicker-y,0px),0);opacity:var(--v4-kicker-opacity,1)}
+body.motion-v4 .chapter__visual{clip-path:inset(var(--v4-reveal-inset,0%) round 1px);will-change:clip-path}
+body.motion-v4 .chapter__photo img{transform:translate3d(0,var(--v4-image-drift,0px),0) scale(var(--v4-image-scale,1.14))!important;transition:filter .9s ease!important;will-change:transform}
+/* Liquid-bronze light travels across the existing image as the chapter scrolls. */
+body.motion-v4 .chapter__photo:after{content:"";pointer-events:none;position:absolute;z-index:3;inset:0;background:linear-gradient(103deg,transparent 31%,rgba(251,232,188,.14) 49%,transparent 63%);transform:translate3d(var(--v4-glint-x,-120%),0,0);opacity:var(--v4-glint-opacity,.55);mix-blend-mode:screen;will-change:transform}
+body.motion-v4 .chapter__photo{overflow:hidden;isolation:isolate}
+/* Editorial art cards unfold in genuine scroll-linked perspective. */
+body.motion-v4 .edit__grid,body.motion-v4 .arena-exp__grid{perspective:1600px;perspective-origin:center 42%}
+body.motion-v4 .edit__item{
+  transform:perspective(1300px) translate3d(0,var(--v4-card-y,0px),0) rotateX(var(--v4-card-rx,0deg)) rotateY(var(--tilt-y,0deg)) scale(var(--v4-card-scale,1))!important;
+  opacity:var(--v4-card-opacity,1);transform-origin:center 65%;will-change:transform,opacity;transition:filter .6s ease,box-shadow .6s ease!important;
+}
+body.motion-v4 .edit__item img{transform:translate3d(0,var(--v4-inner-drift,0px),0) scale(var(--v4-inner-zoom,1.04))!important;will-change:transform;transition:filter .6s ease!important}
+body.motion-v4 .edit__item:hover img{filter:brightness(1.02) saturate(.96)}
+/* Market positions, order, texts and six-column grid stay exactly as V3. */
+body.motion-v4 .city{transform:translate3d(0,var(--v4-card-y,0px),0) scale(var(--v4-card-scale,1))!important;opacity:var(--v4-card-opacity,1);will-change:transform,opacity}
+body.motion-v4 .city img{transform:translate3d(0,var(--v4-inner-drift,0px),0) scale(var(--v4-inner-zoom,1.04));will-change:transform;transition:filter .7s ease}
+body.motion-v4 .experience{transform:translate3d(0,var(--v4-card-y,0px),0) scale(var(--v4-card-scale,1));opacity:var(--v4-card-opacity,1);will-change:transform,opacity}
+/* Final invitation subtly takes a breath as the visitor approaches it. */
+body.motion-v4 .final__image img{transform:translate3d(0,var(--v4-final-y,0px),0) scale(var(--v4-final-scale,1.10))!important;will-change:transform}
+body.motion-v4 .final__content{transform:translate3d(0,var(--v4-final-copy-y,0px),0);opacity:var(--v4-final-opacity,1)}
+/* Thin premium horizontal line turns into a short gold ray as an editorial act enters. */
+body.motion-v4 .edit__header{position:relative}
+body.motion-v4 .edit__header:after{content:"";position:absolute;bottom:-1px;left:0;height:1px;width:var(--v4-rule-width,0%);max-width:100%;background:linear-gradient(90deg,#d3b889,#f0e0c4,transparent);box-shadow:0 0 12px rgba(199,161,105,.33);pointer-events:none}
+body.motion-v4 .markets__head h2{transform:translate3d(0,var(--v4-market-title-y,0px),0)}
+/* Scroll-film reading progress on handheld screens, no distracting floating elements. */
+@media(max-width:1050px){.header__end{justify-self:end}}
+@media(max-width:700px){
+ body.motion-v4 .edit__item{transform:translate3d(0,var(--v4-card-y,0px),0) scale(var(--v4-card-scale,1))!important}
+ body.motion-v4 .chapter__visual{clip-path:inset(var(--v4-reveal-inset,0%) round 0px)}
+ body.motion-v4 .chapter__photo:after{opacity:.34}
+ body.motion-v4 .hero__img img{transform:translate3d(0,var(--v4-hero-y,0px),0) scale(var(--v4-hero-scale,1.065))!important}
+}
+@media(prefers-reduced-motion:reduce){
+ body.motion-v4 .hero__img img,body.motion-v4 .chapter__photo img,body.motion-v4 .final__image img,body.motion-v4 .edit__item img,body.motion-v4 .city img{transform:none!important;will-change:auto!important}
+ body.motion-v4 .hero__content,body.motion-v4 .hero__bottom,body.motion-v4 .chapter__title,body.motion-v4 .chapter__desc,body.motion-v4 .chapter__overline,body.motion-v4 .chapter__product,body.motion-v4 .edit__item,body.motion-v4 .city,body.motion-v4 .experience,body.motion-v4 .final__content{transform:none!important;opacity:1!important;will-change:auto!important}
+ body.motion-v4 .chapter__visual{clip-path:none!important}
+ body.motion-v4 .chapter__photo:after,body.motion-v4 .edit__header:after{display:none!important}
+}
+/* More breathing room for the full three-line headline plus restored two-store CTA on mobile. */
+@media(max-width:700px){
+ .hero{min-height:max(1050px,125svh)}
+ .hero__content{bottom:73px}
+}
+@media(max-width:700px){.hero__content{bottom:12px}}
