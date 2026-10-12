@@ -528,21 +528,6 @@
 <div aria-hidden="true" aria-label="MedaStaré artwork viewer" aria-modal="true" class="artviewer" hidden="" id="artviewer" role="dialog"><button aria-label="Close artwork viewer" class="artviewer__close" type="button">CLOSE  ×</button><div class="artviewer__main"><button aria-label="Previous artwork" class="artviewer__nav artviewer__nav--prev" type="button">←</button><img alt="" class="artviewer__img"/><button aria-label="Next artwork" class="artviewer__nav artviewer__nav--next" type="button">→</button></div><div class="artviewer__caption"><span class="artviewer__title"></span><span class="artviewer__count"></span></div></div><div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script defer="" src="app.js"></script>
 <script defer="True" src="motion-v4.js"></script><script id="medastare-appstore-english-notice">
-(() => {
-  let hideNotice;
-  document.addEventListener('click', (event) => {
-    const link = event.target.closest('a[data-store="ios"]');
-    if (!link) return;
-    event.preventDefault();
-    event.stopPropagation();
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = 'MedaStaré on the App Store is coming soon. Please check back shortly.';
-    toast.classList.add('visible');
-    clearTimeout(hideNotice);
-    hideNotice = setTimeout(() => toast.classList.remove('visible'), 4400);
-  }, true);
-})();
 </script>
 <script id="medastare-cinematic-motion-v6-script">
 
