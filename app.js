@@ -15,7 +15,7 @@ let timeout;const toast=document.querySelector('#toast');function notify(msg){to
 // Live Google Play store URL verified. iOS listing has not yet been independently verified.
 const googlePlay='https://play.google.com/store/apps/details?id=com.medastare.app';
 document.querySelectorAll('[data-store="android"]').forEach(a=>{a.href=googlePlay;a.target='_blank';a.rel='noopener noreferrer'});
-document.querySelectorAll('[data-store="ios"]').forEach(a=>{a.setAttribute('aria-label','App Store — coming soon');a.addEventListener('click',e=>{e.preventDefault();notify('MedaStaré App Store bağlantısı yakında paylaşılacak.')})});
+document.querySelectorAll('[data-store="ios"]').forEach(a=>{a.href='https://apps.apple.com/app/id6813994639';a.setAttribute('aria-label','Download MedaStaré on the App Store')});
 document.querySelectorAll('[data-social]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();notify('Resmi sosyal medya bağlantısı henüz eklenmedi.') }));
 document.querySelector('#year').textContent=new Date().getFullYear();
 })();
