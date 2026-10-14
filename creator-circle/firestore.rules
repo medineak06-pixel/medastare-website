@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function signedIn(){return request.auth != null && request.auth.token.email_verified == true;}
+  function validCreator(d){
+   return d.keys().hasOnly(['uid','email','name','country','platform','profileUrl','membershipStatus','verificationStatus','rewardStatus','createdAt','updatedAt'])
+    && d.keys().hasAll(['uid','email','name','country','platform','profileUrl','membershipStatus','verificationStatus','rewardStatus','createdAt','updatedAt'])
+    && d.uid == request.auth.uid
+    && d.email == request.auth.token.email
+    && d.name is string && d.name.size() >= 2 && d.name.size() <= 100
+    && d.country in ['US','SG','AE','IT','BR','JP','OTHER']
+    && d.platform in ['Instagram','TikTok','YouTube','Other']
+    && d.profileUrl is string && d.profileUrl.size() <= 500 && d.profileUrl.matches('https://.+')
+    && d.membershipStatus == 'active'
+    && d.verificationStatus == 'unverified'
+    && d.rewardStatus == 'locked'
+    && d.createdAt == request.time && d.updatedAt == request.time;
+  }
+  match /sccCreators/{uid} {
+   allow create: if signedIn() && uid == request.auth.uid && validCreator(request.resource.data);
+   allow get: if signedIn() && uid == request.auth.uid;
+   allow list, update, delete: if false;
+  }
+  match /{document=**} {allow read, write: if false;}
+ }
+}
