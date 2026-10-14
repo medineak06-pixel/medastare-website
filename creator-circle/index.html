@@ -73,5 +73,21 @@
 })();
 </script>
 <script src="./firebase-config.js"></script>
-<script type="module" src="./creator-circle.js"></script>
+<script type="module">
+const form=document.getElementById("join-form");
+const status=document.getElementById("message");
+const submit=document.getElementById("submit");
+try {
+  await import("./creator-circle.js");
+  if(form.dataset.sccReady!=="true") {
+    throw new Error("Firebase registration did not initialize. Check the Firebase Web configuration.");
+  }
+} catch(error) {
+  form.dataset.sccReady="failed";
+  submit.disabled=true;
+  status.textContent="Creator Circle registration is temporarily unavailable. Your application was not submitted. Technical detail: "+(error?.message||"Module loading failed");
+  status.classList.remove("hidden");
+  console.error("SCC initialization failure:",error);
+}
+</script>
 </body></html>
