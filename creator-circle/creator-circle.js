@@ -13,6 +13,7 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
 }else{
  const app=initializeApp(config,"scc");
  const auth=getAuth(app),db=getFirestore(app);
+ document.getElementById("join-form").dataset.sccReady="true";
  const key="medastare_scc_pending_v1";
  const pending=()=>{try{return JSON.parse(sessionStorage.getItem(key)||"null");}catch{return null;}};
  const allowed=new Set(["US","SG","AE","IT","BR","JP","OTHER"]);
@@ -46,8 +47,8 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
      if(data.name.length<2||!allowed.has(data.country)||!platformAllowed.has(data.platform)||!validProfile(data.profile)||!$("consent").checked)throw Error("Please check all fields and your public HTTPS profile URL.");
      sessionStorage.setItem(key,JSON.stringify(data));
      await sendSignInLinkToEmail(auth,data.email,{url:location.origin+"/creator-circle/",handleCodeInApp:true});
-     msg("Check your inbox. Open the verification link in this browser to activate your membership.");
-   }catch(err){msg(err?.message||"Unable to send verification email. Please try again.");}
+     msg("Verification email requested successfully. Check your inbox and spam folder. Your membership is NOT active until you open the verification link and your profile is saved.");
+   }catch(err){msg("Registration was not completed: "+(err?.code||err?.message||"Unable to send verification email. Please try again."));}
    finally{btn.disabled=false;}
  });
  $("sign-out").addEventListener("click",async()=>{await signOut(auth);$("success-view").classList.add("hidden");$("form-view").classList.remove("hidden");});
