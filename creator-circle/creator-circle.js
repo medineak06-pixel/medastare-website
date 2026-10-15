@@ -23,7 +23,9 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
  const auth=getAuth(app),db=getFirestore(app);
  document.getElementById("join-form").dataset.sccReady="true";
  const key="medastare_scc_pending_v1";
- const pending=()=>{try{return JSON.parse(sessionStorage.getItem(key)||"null");}catch{return null;}};
+ const pending=()=>{try{return JSON.parse(localStorage.getItem(key)||sessionStorage.getItem(key)||"null");}catch{return null;}};
+ const savePending=data=>{localStorage.setItem(key,JSON.stringify(data));sessionStorage.setItem(key,JSON.stringify(data));};
+ let verifiedUser=null;
  const allowed=new Set(["US","SG","AE","IT","BR","JP","OTHER"]);
  const platformAllowed=new Set(["Instagram","TikTok","YouTube","Other"]);
  function validProfile(value){
@@ -48,6 +50,8 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    $("form-view").classList.add("hidden");
    $("success-view").classList.remove("hidden");
    sessionStorage.removeItem(key);
+   localStorage.removeItem(key);
+   verifiedUser=null;
  }
  const copyButton=$("copy-member-id");
  if(copyButton)copyButton.addEventListener("click",async()=>{
@@ -74,7 +78,12 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    const data={name:$("name").value.trim(),email:$("email").value.trim().toLowerCase(),country:$("country").value,platform:$("platform").value,profile:$("profile").value.trim()};
    try{
      if(data.name.length<2||!allowed.has(data.country)||!platformAllowed.has(data.platform)||!validProfile(data.profile)||!$("consent").checked)throw Error("Please check all fields and your public HTTPS profile URL.");
-     sessionStorage.setItem(key,JSON.stringify(data));
+     if(verifiedUser){
+       if(verifiedUser.email?.toLowerCase()!==data.email)throw Error("Please enter your verified email address.");
+       await activate(verifiedUser,data);
+       return;
+     }
+     savePending(data);
      await sendSignInLinkToEmail(auth,data.email,{url:location.origin+"/creator-circle/",handleCodeInApp:true});
      msg("Verification email requested successfully. Check your inbox and spam folder. Your membership is NOT active until you open the verification link and your profile is saved.");
    }catch(err){msg("Registration was not completed: "+(err?.code||err?.message||"Unable to send verification email. Please try again."));}
@@ -89,7 +98,12 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
        if(!email)return;
        const result=await signInWithEmailLink(auth,email,location.href);
        history.replaceState({},document.title,location.pathname);
-       await activate(result.user,data);
+       if(data)await activate(result.user,data);
+       else{
+         verifiedUser=result.user;
+         $("email").value=result.user.email||email;
+         msg("Email verified. Please complete the form on this page to activate your Creator Circle membership. No second verification email is needed.");
+       }
      }
    }catch(err){msg(err?.message||"Verification failed. Please retry registration.");}
  })();
@@ -98,6 +112,11 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    try{
      const snap=await getDoc(doc(db,"sccCreators",user.uid));
      if(snap.exists)await activate(user,null);
+     else if(!verifiedUser && !isSignInWithEmailLink(auth,location.href)){
+       verifiedUser=user;
+       $("email").value=user.email||"";
+       msg("Email verified. Complete the form to activate your membership. No second verification email is needed.");
+     }
    }catch(err){msg("Signed in, but your profile could not be loaded. Please try again.");}
  });
 }
