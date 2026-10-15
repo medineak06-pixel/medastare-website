@@ -83,7 +83,7 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    }catch(err){msg("Registration was not completed: "+(err?.code||err?.message||"Unable to send verification email. Please try again."));}
    finally{btn.disabled=false;}
  });
- $("sign-out").addEventListener("click",async()=>{await signOut(auth);$("success-view").classList.add("hidden");$("form-view").classList.remove("hidden");});
+ $("sign-out").addEventListener("click",async()=>{await signOut(auth);$("success-view").classList.add("hidden");$("scc-download").classList.add("hidden");$("form-view").classList.remove("hidden");});
  (async()=>{
    try{
      if(isSignInWithEmailLink(auth,location.href)){
