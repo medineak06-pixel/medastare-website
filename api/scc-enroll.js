@@ -1,7 +1,6 @@
 // Server-only SCC enrollment. No changes to mobile app or Firestore security rules.
 // Requires FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL and FIREBASE_ADMIN_PRIVATE_KEY.
 const admin = require('firebase-admin');
-const https = require('node:https');
 const PROJECT = process.env.FIREBASE_ADMIN_PROJECT_ID;
 const EMAIL = process.env.FIREBASE_ADMIN_CLIENT_EMAIL;
 const PRIVATE_KEY = process.env.FIREBASE_ADMIN_PRIVATE_KEY;
