@@ -22,6 +22,20 @@
 #join.panel .field input,#join.panel .field select{background:rgba(11,9,8,.88)}
 @media(max-width:720px){#join.panel::before{background-position:52% center}#join.panel::after{background:rgba(9,8,7,.59)}}
 
+
+/* Post-registration app download — outside the illustrated SCC panel. */
+.scc-download{max-width:650px;margin:30px auto 0;text-align:center;padding:35px 22px 10px}
+.scc-download h2{font-size:clamp(28px,4.5vw,39px);letter-spacing:-.045em;line-height:1.15;margin:13px 0;font-weight:600}
+.scc-download p{color:#c4b49f;font-size:14px;line-height:1.7;margin:10px auto;max-width:490px}
+.scc-download .scc-download__instruction{color:#e1c79e;font-weight:600}
+.scc-download__stores{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:25px}
+.scc-download__store{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;background:#050505;border:1px solid rgba(232,222,208,.48);border-radius:8px;overflow:hidden;text-decoration:none;transition:opacity .22s ease,border-color .22s ease,transform .22s ease}
+.scc-download__store:hover{opacity:.94;border-color:rgba(232,222,208,.88);transform:translateY(-2px)}
+.scc-download__store[data-store="ios"]{width:232px;height:76px}
+.scc-download__store[data-store="android"]{width:208px;height:68px}
+.scc-download__store img{display:block;width:100%;height:100%;object-fit:contain}
+@media(max-width:540px){.scc-download{padding:28px 8px 0}.scc-download__stores{gap:10px;flex-wrap:nowrap}.scc-download__store[data-store="ios"]{width:min(52%,232px);height:auto;aspect-ratio:232/76}.scc-download__store[data-store="android"]{width:min(46%,208px);height:auto;aspect-ratio:208/68}}
+
 </style>
 </head>
 <body>
@@ -41,6 +55,16 @@
 <label class="check"><input type="checkbox" id="consent" required><span>I agree to the applicable <a href="/terms" target="_blank" rel="noopener">Terms</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Notice</a>. I understand membership does not guarantee payment, campaign participation or rewards.</span></label>
 <button class="btn" id="submit" type="submit">Continue with Email ↗</button><p class="fine">We send a sign-in link to verify your email. Only one Creator Circle profile per verified account.</p><div id="message" class="status hidden" role="status" aria-live="polite"></div></form></div>
 <div id="success-view" class="success hidden"><div class="star">✦</div><div class="eyebrow">STARDAY CREATOR CIRCLE</div><h2>You're In.</h2><p>Your Creator Circle membership is active.</p><p class="pill" id="member-id"></p><div style="margin:18px 0"><button class="btn secondary" id="copy-member-id" type="button">Copy SCC ID ↗</button></div><p id="copy-status" class="fine hidden" role="status" aria-live="polite"></p><p class="fine">Rewards and payouts remain subject to eligibility, verification and applicable official rules.</p><button class="btn secondary" id="sign-out" type="button">Sign out</button></div>
+</section>
+<section class="scc-download hidden" id="scc-download" aria-labelledby="scc-download-heading">
+<div class="eyebrow">YOUR CREATOR JOURNEY CONTINUES</div>
+<h2 id="scc-download-heading">Your next step starts in the app.</h2>
+<p>Download MedaStaré to continue your StarDay Creator journey.</p>
+<p class="scc-download__instruction">Apply to become a Creator in the app.</p>
+<div class="scc-download__stores">
+<a class="scc-download__store" data-store="ios" aria-label="Download on the App Store" href="https://apps.apple.com/app/id6813994639"><img alt="Download on the App Store" decoding="async" src="/assets/v4/badge-appstore.png" width="178" height="54"></a>
+<a class="scc-download__store" data-store="android" aria-label="Get it on Google Play" href="/#download"><img alt="Get it on Google Play" decoding="async" src="/assets/v4/badge-googleplay.png" width="178" height="54"></a>
+</div>
 </section>
 </main><footer>© MedaStaré Inc. · Creator Circle membership is not a paid partnership or earnings guarantee.</footer>
 <script>
