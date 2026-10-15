@@ -1,9 +1,17 @@
-// SCC enrollment — Firebase credentials are deliberately not committed.
-// Configure window.MEDASTARE_SCC_FIREBASE in creator-circle/firebase-config.js
-// using public Firebase Web SDK config (never a service-account/private key).
-import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import {getAuth,sendSignInLinkToEmail,isSignInWithEmailLink,signInWithEmailLink,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+// SCC enrollment: classic script, Firebase compat SDK loaded by SCC-only bootstrap.
+// Avoid ES module imports which can fail on mobile embedded browsers.
+const initializeApp=(config)=>firebase.initializeApp(config,"scc");
+const getAuth=(app)=>app.auth();
+const getFirestore=(app)=>app.firestore();
+const doc=(db,collection,id)=>db.collection(collection).doc(id);
+const getDoc=(ref)=>ref.get();
+const setDoc=(ref,data)=>ref.set(data);
+const serverTimestamp=()=>firebase.firestore.FieldValue.serverTimestamp();
+const sendSignInLinkToEmail=(auth,email,settings)=>auth.sendSignInLinkToEmail(email,settings);
+const isSignInWithEmailLink=(auth,url)=>auth.isSignInWithEmailLink(url);
+const signInWithEmailLink=(auth,email,url)=>auth.signInWithEmailLink(email,url);
+const onAuthStateChanged=(auth,cb)=>auth.onAuthStateChanged(cb);
+const signOut=(auth)=>auth.signOut();
 const $=id=>document.getElementById(id);
 const msg=(s)=>{$("message").textContent=s;$("message").classList.remove("hidden");};
 const config=window.MEDASTARE_SCC_FIREBASE;
@@ -24,7 +32,7 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
  async function activate(user,data){
    const ref=doc(db,"sccCreators",user.uid);
    const snapshot=await getDoc(ref);
-   if(!snapshot.exists()){
+   if(!snapshot.exists){
      if(!data||user.email?.toLowerCase()!==data.email.toLowerCase())throw Error("Registration details were not found. Please complete the form again.");
      await setDoc(ref,{
        uid:user.uid,email:user.email.toLowerCase(),name:data.name.trim(),
@@ -68,7 +76,7 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    if(!user)return;
    try{
      const snap=await getDoc(doc(db,"sccCreators",user.uid));
-     if(snap.exists())await activate(user,null);
+     if(snap.exists)await activate(user,null);
    }catch(err){msg("Signed in, but your profile could not be loaded. Please try again.");}
  });
 }
