@@ -23,9 +23,7 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
  const auth=getAuth(app),db=getFirestore(app);
  document.getElementById("join-form").dataset.sccReady="true";
  const key="medastare_scc_pending_v1";
- const pending=()=>{try{return JSON.parse(localStorage.getItem(key)||sessionStorage.getItem(key)||"null");}catch{return null;}};
- const savePending=data=>{localStorage.setItem(key,JSON.stringify(data));sessionStorage.setItem(key,JSON.stringify(data));};
- let verifiedUser=null;
+ const pending=()=>{try{return JSON.parse(sessionStorage.getItem(key)||"null");}catch{return null;}};
  const allowed=new Set(["US","SG","AE","IT","BR","JP","OTHER"]);
  const platformAllowed=new Set(["Instagram","TikTok","YouTube","Other"]);
  function validProfile(value){
@@ -51,8 +49,6 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    $("success-view").classList.remove("hidden");
    $("scc-download").classList.remove("hidden");
    sessionStorage.removeItem(key);
-   localStorage.removeItem(key);
-   verifiedUser=null;
  }
  const copyButton=$("copy-member-id");
  if(copyButton)copyButton.addEventListener("click",async()=>{
@@ -79,53 +75,30 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
    const data={name:$("name").value.trim(),email:$("email").value.trim().toLowerCase(),country:$("country").value,platform:$("platform").value,profile:$("profile").value.trim()};
    try{
      if(data.name.length<2||!allowed.has(data.country)||!platformAllowed.has(data.platform)||!validProfile(data.profile)||!$("consent").checked)throw Error("Please check all fields and your public HTTPS profile URL.");
-     if(verifiedUser){
-       if(verifiedUser.email?.toLowerCase()!==data.email)throw Error("Please enter your verified email address.");
-       await activate(verifiedUser,data);
-       return;
-     }
-     savePending(data);
+     sessionStorage.setItem(key,JSON.stringify(data));
      await sendSignInLinkToEmail(auth,data.email,{url:location.origin+"/creator-circle/",handleCodeInApp:true});
      msg("Verification email requested successfully. Check your inbox and spam folder. Your membership is NOT active until you open the verification link and your profile is saved.");
    }catch(err){msg("Registration was not completed: "+(err?.code||err?.message||"Unable to send verification email. Please try again."));}
    finally{btn.disabled=false;}
  });
- $("sign-out").addEventListener("click",async()=>{await signOut(auth);$("success-view").classList.add("hidden");$("scc-download").classList.add("hidden");$("form-view").classList.remove("hidden");});
- // Capture the incoming link once, before any URL cleanup or auth callbacks.
- const incomingLink=location.href;
- const completingEmailLink=isSignInWithEmailLink(auth,incomingLink);
- let handlingEmailLink=completingEmailLink;
+ $("sign-out").addEventListener("click",async()=>{await signOut(auth);$("success-view").classList.add("hidden");$("form-view").classList.remove("hidden");});
  (async()=>{
-   if(!completingEmailLink)return;
    try{
-     const data=pending();
-     const email=data?.email||prompt("Enter the email address used to join Creator Circle:");
-     if(!email){msg("Enter the email used for registration to finish verification.");return;}
-     // A Firebase email action code is single-use: never call signInWithEmailLink twice.
-     const result=await signInWithEmailLink(auth,email.trim().toLowerCase(),incomingLink);
-     history.replaceState({},document.title,location.pathname);
-     if(data)await activate(result.user,data);
-     else{
-       verifiedUser=result.user;
-       $("email").value=result.user.email||email;
-       msg("Email verified. Please complete the form on this page to activate your Creator Circle membership. No second verification email is needed.");
+     if(isSignInWithEmailLink(auth,location.href)){
+       const data=pending();
+       const email=data?.email||prompt("Enter the email address used to join Creator Circle:");
+       if(!email)return;
+       const result=await signInWithEmailLink(auth,email,location.href);
+       history.replaceState({},document.title,location.pathname);
+       await activate(result.user,data);
      }
-   }catch(err){
-     if(err?.code==="auth/invalid-action-code"||err?.code==="auth/expired-action-code"){
-       msg("This verification link is expired, already used or invalid. If you have already verified your email, complete the form without requesting another link. Otherwise request a fresh link and open the newest email only once.");
-     }else msg(err?.message||"Verification failed. Please retry registration.");
-   }finally{handlingEmailLink=false;}
+   }catch(err){msg(err?.message||"Verification failed. Please retry registration.");}
  })();
  onAuthStateChanged(auth,async user=>{
-   if(!user||handlingEmailLink)return;
+   if(!user)return;
    try{
      const snap=await getDoc(doc(db,"sccCreators",user.uid));
      if(snap.exists)await activate(user,null);
-     else if(!verifiedUser){
-       verifiedUser=user;
-       $("email").value=user.email||"";
-       msg("Email verified. Complete the form to activate your membership. No second verification email is needed.");
-     }
    }catch(err){msg("Signed in, but your profile could not be loaded. Please try again.");}
  });
 }
