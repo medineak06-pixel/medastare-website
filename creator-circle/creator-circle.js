@@ -42,11 +42,32 @@ if(!config?.apiKey||!config?.projectId||!config?.authDomain){
      });
    }
    const member=await getDoc(ref);
-   $("member-id").textContent="Member ID · SCC-"+user.uid.slice(0,10).toUpperCase();
+   const memberId="SCC-"+user.uid.slice(0,10).toUpperCase();
+   $("member-id").dataset.memberId=memberId;
+   $("member-id").textContent="Member ID · "+memberId;
    $("form-view").classList.add("hidden");
    $("success-view").classList.remove("hidden");
    sessionStorage.removeItem(key);
  }
+ const copyButton=$("copy-member-id");
+ if(copyButton)copyButton.addEventListener("click",async()=>{
+   const id=$("member-id").dataset.memberId;
+   if(!id)return;
+   try{
+     if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(id);
+     else{
+       const field=document.createElement("textarea");
+       field.value=id;field.style.position="fixed";field.style.opacity="0";
+       document.body.appendChild(field);field.select();
+       const copied=document.execCommand("copy");field.remove();
+       if(!copied)throw Error("Copy unavailable");
+     }
+     $("copy-status").textContent="SCC ID copied. Keep it for future creator applications.";
+   }catch{
+     $("copy-status").textContent="Copy unavailable. Select the SCC ID above to copy it manually.";
+   }
+   $("copy-status").classList.remove("hidden");
+ });
  $("join-form").addEventListener("submit",async e=>{
    e.preventDefault();
    const btn=$("submit");btn.disabled=true;
