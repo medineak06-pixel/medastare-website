@@ -72,7 +72,7 @@
   });
 })();
 </script>
-<script src="./firebase-config.js"></script>
+<script src="/creator-circle/firebase-config.js"></script>
 <script>
 (function(){
   const form=document.getElementById("join-form");
@@ -100,7 +100,7 @@
       await loadSdk("firebase-app-compat.js");
       await loadSdk("firebase-auth-compat.js");
       await loadSdk("firebase-firestore-compat.js");
-      await load("./creator-circle.js");
+      await load("/creator-circle/creator-circle.js");
       if(form.dataset.sccReady!=="true")throw new Error("Firebase registration did not initialize. Check Firebase configuration.");
     }catch(error){fail(error);}
   })();
